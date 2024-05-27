@@ -1,14 +1,15 @@
 import React from 'react'
 import './LoginForm.css'
-import { useState } from 'react';
+import {     useState } from 'react';
 import {ApiUrl} from '../../services/apirest'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 //import InicioForm from '../InicioForm/InicioForm';
 
+
 const LoginForm = ()=>{
 
-    
+
     const navigate = useNavigate();
     const [form, setForm] = useState({
         nombre_login: '',
@@ -25,7 +26,7 @@ const LoginForm = ()=>{
         axios.post(url, form)
         .then(response =>{
             localStorage.setItem('token', response.data.tokenSession)
-            /* localStorage.setItem('userData', JSON.stringify(response)) */
+            localStorage.setItem('user', response.data.user_data)
             navigate("/inicio")
             window.location.reload()
             //console.log(response)
@@ -33,11 +34,12 @@ const LoginForm = ()=>{
         })
         .catch(error=>{
             try{
-                
+                console.log(error)
             setErrorMessage(error.response.data.message.error_text)
             }
             catch(e){
                 alert("Error al intentar establecer la conexión con el API")
+                console.log(e)
             }
         })
         .finally(()=>{

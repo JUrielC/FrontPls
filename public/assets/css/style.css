@@ -1769,10 +1769,12 @@ a.dropdown-item {
 
 .dropdown-divider {
   border-top-color: #f9f9f9; }
-
+/* Buscar H */
 .dropdown-list {
   width: 350px;
-  padding: 0; }
+  padding: 0;/* 
+  height: 200px; */
+ }
   .dropdown-list .dropdown-item {
     display: inline-block;
     width: 100%;

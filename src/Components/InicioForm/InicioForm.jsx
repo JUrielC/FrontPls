@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import PrestamosActivos from '../PrestamosActivos/PrestamosActivos'
+import { useContext } from 'react';
+import './InicioForm.css'
 
 
 const InicioForm = () => {
-   /*  const location = useLocation();
-    const userData = location.state && location.state.user_data;
-    const user = (userData.nombre_usuario).toString() + " " + (userData.apellido_paterno).toString() */
-    
-    const [labelTitleTable, setlabelTitleTable] = useState('Prestamos Pendientes')
 
-    useEffect(()=>{
-       /*  console.log(userData)
-        console.log(userData.apellido_paterno) */
-    },[]) 
+    const userData = localStorage.getItem('user')
+    const [labelTitleTable, setlabelTitleTable] = useState('Prestamos Pendientes')
+    useEffect(() => {
+    }, [])
 
 
 
@@ -94,135 +91,26 @@ const InicioForm = () => {
                                 </div>
                             </form>
                             <ul className="navbar-nav navbar-right">
-                                <li className="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" className="nav-link nav-link-lg message-toggle beep"><i className="far fa-envelope"></i></a>
-                                    <div className="dropdown-menu dropdown-list dropdown-menu-right">
-                                        <div className="dropdown-header">Messages
-                                            <div className="float-right">
-                                                <a href="#">Mark All As Read</a>
-                                            </div>
-                                        </div>
-                                        <div className="dropdown-list-content dropdown-list-message">
-                                            <a href="#" className="dropdown-item dropdown-item-unread">
-                                                <div className="dropdown-item-avatar">
-                                                    <img alt="image" src="assets/img/avatar/avatar-1.png" className="rounded-circle" />
-                                                    <div className="is-online"></div>
-                                                </div>
-                                                <div className="dropdown-item-desc">
-                                                    <b>Kusnaedi</b>
-                                                    <p>Hello, Bro!</p>
-                                                    <div className="time">10 Hours Ago</div>
-                                                </div>
-                                            </a>
-                                            <a href="#" className="dropdown-item dropdown-item-unread">
-                                                <div className="dropdown-item-avatar">
-                                                    <img alt="image" src="assets/img/avatar/avatar-2.png" className="rounded-circle" />
-                                                </div>
-                                                <div className="dropdown-item-desc">
-                                                    <b>Dedik Sugiharto</b>
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
-                                                    <div className="time">12 Hours Ago</div>
-                                                </div>
-                                            </a>
-                                            <a href="#" className="dropdown-item dropdown-item-unread">
-                                                <div className="dropdown-item-avatar">
-                                                    <img alt="image" src="assets/img/avatar/avatar-3.png" className="rounded-circle" />
-                                                    <div className="is-online"></div>
-                                                </div>
-                                                <div className="dropdown-item-desc">
-                                                    <b>Agung Ardiansyah</b>
-                                                    <p>Sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                                    <div className="time">12 Hours Ago</div>
-                                                </div>
-                                            </a>
-                                            <a href="#" className="dropdown-item">
-                                                <div className="dropdown-item-avatar">
-                                                    <img alt="image" src="assets/img/avatar/avatar-4.png" className="rounded-circle" />
-                                                </div>
-                                                <div className="dropdown-item-desc">
-                                                    <b>Ardian Rahardiansyah</b>
-                                                    <p>Duis aute irure dolor in reprehenderit in voluptate velit ess</p>
-                                                    <div className="time">16 Hours Ago</div>
-                                                </div>
-                                            </a>
-                                            <a href="#" className="dropdown-item">
-                                                <div className="dropdown-item-avatar">
-                                                    <img alt="image" src="assets/img/avatar/avatar-5.png" className="rounded-circle" />
-                                                </div>
-                                                <div className="dropdown-item-desc">
-                                                    <b>Alfa Zulkarnain</b>
-                                                    <p>Exercitation ullamco laboris nisi ut aliquip ex ea commodo</p>
-                                                    <div className="time">Yesterday</div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div className="dropdown-footer text-center">
-                                            <a href="#">View All <i className="fas fa-chevron-right"></i></a>
-                                        </div>
+                                <li className="if-dropdown">
+                                    <a href="#" className="if-dropdown-toggle nav-link nav-link message-toggle ">
+                                        <i className="fa fa-plus"></i>
+                                    </a>
+                                    <div class="if-dropdown-menu">
+                                        <a href="#">Préstamo</a>
+                                        <a href="#">Herramienta</a>
+                                        <a href="#">Tipo de Herramienta</a>
+                                        <a href="#">Usuario</a>
+                                        <a href="#">Alumno/Maestro</a>
                                     </div>
+
                                 </li>
-                                <li className="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" className="nav-link notification-toggle nav-link-lg beep"><i className="far fa-bell"></i></a>
-                                    <div className="dropdown-menu dropdown-list dropdown-menu-right">
-                                        <div className="dropdown-header">Notifications
-                                            <div className="float-right">
-                                                <a href="#">Mark All As Read</a>
-                                            </div>
-                                        </div>
-                                        <div className="dropdown-list-content dropdown-list-icons">
-                                            <a href="#" className="dropdown-item dropdown-item-unread">
-                                                <div className="dropdown-item-icon bg-primary text-white">
-                                                    <i className="fas fa-code"></i>
-                                                </div>
-                                                <div className="dropdown-item-desc">
-                                                    Template update is available now!
-                                                    <div className="time text-primary">2 Min Ago</div>
-                                                </div>
-                                            </a>
-                                            <a href="#" className="dropdown-item">
-                                                <div className="dropdown-item-icon bg-info text-white">
-                                                    <i className="far fa-user"></i>
-                                                </div>
-                                                <div className="dropdown-item-desc">
-                                                    <b>You</b> and <b>Dedik Sugiharto</b> are now friends
-                                                    <div className="time">10 Hours Ago</div>
-                                                </div>
-                                            </a>
-                                            <a href="#" className="dropdown-item">
-                                                <div className="dropdown-item-icon bg-success text-white">
-                                                    <i className="fas fa-check"></i>
-                                                </div>
-                                                <div className="dropdown-item-desc">
-                                                    <b>Kusnaedi</b> has moved task <b>Fix bug header</b> to <b>Done</b>
-                                                    <div className="time">12 Hours Ago</div>
-                                                </div>
-                                            </a>
-                                            <a href="#" className="dropdown-item">
-                                                <div className="dropdown-item-icon bg-danger text-white">
-                                                    <i className="fas fa-exclamation-triangle"></i>
-                                                </div>
-                                                <div className="dropdown-item-desc">
-                                                    Low disk space. Let's clean it!
-                                                    <div className="time">17 Hours Ago</div>
-                                                </div>
-                                            </a>
-                                            <a href="#" className="dropdown-item">
-                                                <div className="dropdown-item-icon bg-info text-white">
-                                                    <i className="fas fa-bell"></i>
-                                                </div>
-                                                <div className="dropdown-item-desc">
-                                                    Welcome to Stisla template!
-                                                    <div className="time">Yesterday</div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div className="dropdown-footer text-center">
-                                            <a href="#">View All <i className="fas fa-chevron-right"></i></a>
-                                        </div>
-                                    </div>
-                                </li>
+
                                 {/* NOMBRE DE USUARIO */}
                                 <li className="dropdown"><a href="#" data-toggle="dropdown" className="nav-link dropdown-toggle nav-link-lg nav-link-user">
                                     <img alt="image" src="assets/img/avatar/avatar-1.png" className="rounded-circle mr-1" />
-                                    <div className="d-sm-none d-lg-inline-block">{/* {user} */}</div></a>
+                                    <div className="d-sm-none d-lg-inline-block">{userData}</div>
+
+                                </a>
                                     <div className="dropdown-menu dropdown-menu-right">
                                         <div className="dropdown-title">Logged in 5 min ago</div>
                                         <a href="features-profile.html" className="dropdown-item has-icon">
@@ -269,7 +157,7 @@ const InicioForm = () => {
                                     <li className="menu-header">Laboratorio</li>
                                     <li className="dropdown">
                                         <a href="#" className="nav-link has-dropdown">
-                                            <i className="fas" style={{fontSize: '150%'}}>
+                                            <i className="fas" style={{ fontSize: '150%' }}>
                                                 P
                                             </i>
                                             <span>Préstamos</span>
@@ -283,7 +171,7 @@ const InicioForm = () => {
                                     <li className="dropdown">
                                         <a href="#" className="nav-link has-dropdown">
                                             <i className="fas fa-archive" >
-                                                
+
                                             </i>
                                             <span>Inventario</span>
                                         </a>
@@ -295,7 +183,7 @@ const InicioForm = () => {
                                     <li className="menu-header">Administración</li>
                                     <li className="dropdown">
                                         <a href="#" className="nav-link has-dropdown" data-toggle="dropdown">
-                                            <i className="fas fa-columns"></i> 
+                                            <i className="fas fa-columns"></i>
                                             <span>Usuarios</span>
                                         </a>
                                         <ul className="dropdown-menu">
@@ -303,10 +191,10 @@ const InicioForm = () => {
                                             <li><a /* className="nav-link" */ href="">Solicitantes</a></li>
                                         </ul>
                                     </li>
-                                    
+
                                 </ul>
 
-                                 </aside>
+                            </aside>
                         </div>
 
                         {/* Main Content */}
@@ -322,7 +210,7 @@ const InicioForm = () => {
                                             <h4>{labelTitleTable}</h4>
                                         </div>
                                         <div className="card-body">
-                                                <PrestamosActivos></PrestamosActivos> 
+                                            <PrestamosActivos></PrestamosActivos>
                                         </div>
                                     </div>
                                     {/* </div> */}

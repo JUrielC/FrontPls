@@ -1,16 +1,16 @@
 import DataTable from 'react-data-table-component'
 import {ApiUrl} from '../../services/apirest'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import './PrestamosActivos.css'
 //import { response } from 'express';
 
-const PrestamosActivos = ({titleTable}) =>{
+const PrestamosActivos = () =>{
     
     const [data,setData] = useState([]); 
     const [loading, setLoading] = useState(true); 
-    let url = ApiUrl + "prestamos"  
+    let url = ApiUrl + "prestamos/prestamos_activos"  
     const columns = [
                 {
                     name: "ID Préstamo",
@@ -68,7 +68,7 @@ const PrestamosActivos = ({titleTable}) =>{
             try {
               alert(error.response.data.message.error_text);
             } catch (e) {
-              console.log(e);
+              alert("Error al intentar establecer la conexión con el servidor")
             }
           })
           .finally(()=>{
@@ -85,7 +85,7 @@ const PrestamosActivos = ({titleTable}) =>{
                 data={data}
                 pagination
                 persistTableHead={true}
-                paginationPerPage={8}
+                paginationPerPage={6}
                 selectableRows
                 progressPending={loading}
                 progressComponent={
