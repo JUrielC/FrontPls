@@ -1,0 +1,56 @@
+/* Estilos básicos para el dropdown */
+.if-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.if-dropdown-toggle {
+    cursor: pointer;
+    color: black;
+    padding: 10px;
+    border: none;
+    background: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.if-dropdown-toggle:hover {
+    color: #fff;
+}
+
+.if-dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 260px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1;
+}
+
+.if-dropdown-menu button {
+    color: #585b5e;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer; /* Asegura que el cursor se convierta en una manita */
+}
+
+.if-dropdown-menu button:hover {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+.if-dropdown:hover .if-dropdown-menu {
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
+    .if-dropdown-menu {
+        min-width: 120px;
+    }
+}

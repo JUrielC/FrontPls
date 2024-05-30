@@ -1,97 +1,131 @@
 import DataTable from 'react-data-table-component'
-import {ApiUrl} from '../../services/apirest'
+import { ApiUrl } from '../../services/apirest'
 import axios from 'axios'
-//import { useNavigate } from 'react-router-dom';
+//import ToolTipForCells from '../TooltipForCells/ToolTipForCells';
+import '../TooltipForCells/ToolTipForCells.css'
 import { useEffect, useState } from 'react';
 import './PrestamosActivos.css'
 //import { response } from 'express';
 
-const PrestamosActivos = () =>{
+
+/* LA PROP CORRESPONDE A LOS VALORES QUE SE QUIEREN BUSCAR EN LA TABLA A TRAVÉS DEL CUADRO DE BUSQUEDA */
+const PrestamosActivos = ({filterSearch}) => {
+
+    const [data, setData] = useState([]);
+    const [records, setRecords] = useState([])
+    const [loading, setLoading] = useState(true);
+    let url = ApiUrl + "prestamos/prestamos_activos"
     
-    const [data,setData] = useState([]); 
-    const [loading, setLoading] = useState(true); 
-    let url = ApiUrl + "prestamos/prestamos_activos"  
+    /* COLUMNAS DE LA TABLA */
     const columns = [
-                {
-                    name: "ID Préstamo",
-                    selector: row => row.id_prestamo,
-                    sortable: true
-                },
-                {
-                    name: "Solicitante",
-                    selector: row => row.solicitante,
-                    sortable: true
-                },
-                {
-                    name: "Entrega",
-                    selector: row => row.usuario_entrega,
-                    sortable: true
-                },
-                {
-                    name: "ID Herramienta",
-                    selector: row => row.id_herramienta,
-                    sortable: true
-                },
-                {
-                    name: "Tipo",
-                    selector: row => row.nombre_tipo,
-                    sortable: true
-                },
-                {
-                    name: "Carrera",
-                    selector: row => row.nombre_carrera,
-                    sortable: true
-                },
-                {
-                    name: "Estatus",
-                    selector: row => row.nombre_estatus,
-                    sortable: true
-                },
-                {
-                    name: "Fecha",
-                    selector: row => row.fecha_prestamo,
-                    sortable: true
-                },
-                {
-                    name: "Observaciones",
-                    selector: row => row.observaciones,
-                    sortable: true    
-                }
-            ]
-    
+        {
+            name: "ID",
+            selector: row => row.id_prestamo,
+            sortable: true,
+            width: "6rem"
+        },
+        {
+            name: "Solicitante",
+            selector: row => row.solicitante,
+            sortable: true,
+            width: "17rem"
+
+        },
+        {
+            name: "Entrega",
+            selector: row => row.usuario_entrega,
+            sortable: true
+        },
+        {
+            name: "ID Herramienta",
+            selector: row => row.id_herramienta,
+            sortable: true
+        },
+        {
+            name: "Tipo",
+            selector: row => row.nombre_tipo,
+            sortable: true
+        },
+        {
+            name: "Carrera",
+            selector: row => row.nombre_carrera,
+            sortable: true
+        },
+        {
+            name: "Estatus",
+            selector: row => row.nombre_estatus,
+            sortable: true
+        },
+        {
+            name: "Fecha",
+            selector: row => row.fecha_prestamo,
+            sortable: true
+        },
+        {
+            name: "Observaciones",
+            selector: row => row.observaciones,
+            sortable: true
+        }
+    ]
+
+    /* FUNCIONES AL MONTAR EL COMPONENTE */
     useEffect(() => {
         axios.get(url)
-          .then(response => {
-            setData(response.data);
-          })
-          .catch(error => {
-            try {
-              alert(error.response.data.message.error_text);
-            } catch (e) {
-              alert("Error al intentar establecer la conexión con el servidor")
-            }
-          })
-          .finally(()=>{
-            setLoading(false);
-          })
-          
-      }, [url]);
+            .then(response => {
+                setData(response.data);
+                setRecords(response.data)
+            })
+            .catch(error => {
+                try {
+                    alert(error.response.data.message.error_text);
+                } catch (e) {
+                    alert("Error al intentar establecer la conexión con el servidor")
+                }
+            })
+            .finally(() => {
+                setLoading(false);
+            })
 
-    return(
-        <>  
+    }, [url]);
+
+
+    /* MANEJADOR DEL filterSearch */
+    useEffect(()=>{
+        const trimmedFilterSearch = filterSearch.trim();
+        if(trimmedFilterSearch === ""){
+            setRecords(data)
+        }
+        else{
+            const newFilteredData = data.filter(
+                item =>
+                item.solicitante && item.solicitante.toLowerCase().includes(trimmedFilterSearch.toLowerCase())
+              ) 
+
+              setRecords(newFilteredData)
+        }
+    },[filterSearch, data])
+
+
+
+    return (
+        <>
             <p></p>
-                <DataTable
+            <DataTable
                 columns={columns}
-                data={data}
+                data={records}
                 pagination
                 persistTableHead={true}
-                paginationPerPage={6}
-                selectableRows
+                paginationPerPage={6}/* 
+                selectableRows */
                 progressPending={loading}
+                paginationRowsPerPageOptions={[6, 8, 10, 15, 20, 25, 30]}
+                onRowClicked={(data) => { console.log(data.id_herramienta) }}  // Manejar clic en la fila
+                highlightOnHover  // Resaltar la fila al pasar el ratón por encima
+                pointerOnHover    // Mostrar puntero al pasar el ratón por encima
                 progressComponent={
-                    <div id = 'spinner'></div>
+                    <div id='spinner'></div>
                 }
-                />
+            />
         </>
     )
 

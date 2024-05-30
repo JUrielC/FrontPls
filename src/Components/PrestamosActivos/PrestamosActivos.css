@@ -7,6 +7,9 @@
     animation: rotate 1.5s linear infinite;
 }
 
+
+
 @keyframes rotate{
     to{ transform: rotate(365deg); }
 }
+
