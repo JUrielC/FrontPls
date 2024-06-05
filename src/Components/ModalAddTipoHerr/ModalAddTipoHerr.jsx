@@ -13,7 +13,7 @@ const ModalAddTipoHerr = ({setOpenModalAddTipoHerr}) => {
           <div className="row">
             <div className="input-group">
               <label htmlFor="nombreTipo">Nombre de tipo de herramienta:</label>
-              <input type="text" id="nombreTipo"  maxLength={50}/>
+              <input type="text" id="nombreTipo"  maxLength={50} className="selectric"/>
             </div>
           </div>
           <div className="input-group">

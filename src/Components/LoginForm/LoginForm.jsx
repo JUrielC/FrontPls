@@ -38,7 +38,7 @@ const LoginForm = ()=>{
             setErrorMessage(error.response.data.message.error_text)
             }
             catch(e){
-                alert("Error al intentar establecer la conexión con el API")
+                alert("Error al intentar establecer la conexión con el servidor")
                 console.log(e)
             }
         })

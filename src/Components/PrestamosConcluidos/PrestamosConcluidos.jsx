@@ -3,16 +3,15 @@ import { ApiUrl } from '../../services/apirest'
 import axios from 'axios'
 import '../TooltipForCells/ToolTipForCells.css'
 import { useEffect, useState } from 'react';
-import './PrestamosActivos.css'
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
-//import { response } from 'express';
+import './PrestamosConcluidos.css'
 
 
 /* LA PROP CORRESPONDE A LOS VALORES QUE SE QUIEREN BUSCAR EN LA TABLA A TRAVÉS DEL CUADRO DE BUSQUEDA */
-const PrestamosActivos = ({filterSearch}) => {
+const PrestamosConcluidos = ({filterSearch}) => {
 
-    const [records, setRecords] = useState([])  
-    let url = ApiUrl + "prestamos/prestamos_activos"
+    const [records, setRecords] = useState([])
+    let url = ApiUrl + "prestamos/prestamos_concluidos"
     
     const { data, loading, error } = useGetWithAuth(url, setRecords)
 
@@ -32,8 +31,18 @@ const PrestamosActivos = ({filterSearch}) => {
 
         },
         {
+            name: "No. Ctrl/Nómina",
+            selector: row => row.control_nomina,
+            sortable: true
+        },
+        {
             name: "Entrega",
             selector: row => row.usuario_entrega,
+            sortable: true
+        },
+        {
+            name: "Recibe",
+            selector: row => row.usuario_recibe,
             sortable: true
         },
         {
@@ -57,8 +66,13 @@ const PrestamosActivos = ({filterSearch}) => {
             sortable: true
         },
         {
-            name: "Fecha",
+            name: "Fecha de préstamo",
             selector: row => row.fecha_prestamo,
+            sortable: true
+        },
+        {
+            name: "Fecha devolución",
+            selector: row => row.fecha_devolucion,
             sortable: true
         },
         {
@@ -67,6 +81,7 @@ const PrestamosActivos = ({filterSearch}) => {
             sortable: true
         }
     ]
+
 
     /* MANEJADOR DEL filterSearch */
     useEffect(()=>{
@@ -84,14 +99,14 @@ const PrestamosActivos = ({filterSearch}) => {
         }
     },[filterSearch, data])
 
+
     
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <div >
+        <>
             <DataTable
-                fixedHeader = {true}
                 columns={columns}
                 data={records}
                 pagination
@@ -99,7 +114,7 @@ const PrestamosActivos = ({filterSearch}) => {
                 paginationPerPage={8}/* 
                 selectableRows */
                 progressPending={loading}
-                paginationRowsPerPageOptions={[6, 8, 10, 15, 20, 25, 30]}
+                paginationRowsPerPageOptions={[7, 8, 10, 15, 20, 25, 30]}
                 onRowClicked={(data) => { console.log(data.id_herramienta) }}  // Manejar clic en la fila
                 highlightOnHover  // Resaltar la fila al pasar el ratón por encima
                 pointerOnHover    // Mostrar puntero al pasar el ratón por encima
@@ -119,18 +134,13 @@ const PrestamosActivos = ({filterSearch}) => {
                             minHeight: '5.5vh'
                         }
                     },
-                    header:{
-                        style: {
-                            borderColor: 'red'
-                        }
-                    },
                 }}
             />
-        </div>
+        </>
     )
 
 
 
 }
 
-export default PrestamosActivos;
+export default PrestamosConcluidos;

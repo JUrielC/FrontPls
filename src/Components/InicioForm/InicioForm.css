@@ -1,0 +1,9 @@
+.if-form-group {
+    display: flex;
+    align-items: center;
+    color: gray;
+    font-weight: bold;
+}
+.if-form-group label {
+    margin-right: 20px; /* Ajusta el espacio entre el label y el combo */
+}

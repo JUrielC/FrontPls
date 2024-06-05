@@ -1,21 +1,20 @@
 import DataTable from 'react-data-table-component'
 import { ApiUrl } from '../../services/apirest'
 import axios from 'axios'
-import '../TooltipForCells/ToolTipForCells.css'
+//import ToolTipForCells from '../TooltipForCells/ToolTipForCells';
 import { useEffect, useState } from 'react';
-import './PrestamosActivos.css'
-import useGetWithAuth from '../../Hooks/useGetWithAUTH';
+import './ListaPrestamos.css'
 //import { response } from 'express';
 
 
 /* LA PROP CORRESPONDE A LOS VALORES QUE SE QUIEREN BUSCAR EN LA TABLA A TRAVÉS DEL CUADRO DE BUSQUEDA */
-const PrestamosActivos = ({filterSearch}) => {
+const ListaPrestamos = ({filterSearch}) => {
 
-    const [records, setRecords] = useState([])  
-    let url = ApiUrl + "prestamos/prestamos_activos"
+    const [data, setData] = useState([]);
+    const [records, setRecords] = useState([])
+    const [loading, setLoading] = useState(true);
+    let url = ApiUrl + "prestamos/"
     
-    const { data, loading, error } = useGetWithAuth(url, setRecords)
-
     /* COLUMNAS DE LA TABLA */
     const columns = [
         {
@@ -32,8 +31,18 @@ const PrestamosActivos = ({filterSearch}) => {
 
         },
         {
+            name: "No. Ctrl/Nómina",
+            selector: row => row.control_nomina,
+            sortable: true
+        },
+        {
             name: "Entrega",
             selector: row => row.usuario_entrega,
+            sortable: true
+        },
+        {
+            name: "Recibe",
+            selector: row => row.usuario_recibe,
             sortable: true
         },
         {
@@ -57,8 +66,13 @@ const PrestamosActivos = ({filterSearch}) => {
             sortable: true
         },
         {
-            name: "Fecha",
+            name: "Fecha de préstamo",
             selector: row => row.fecha_prestamo,
+            sortable: true
+        },
+        {
+            name: "Fecha devolución",
+            selector: row => row.fecha_devolucion,
             sortable: true
         },
         {
@@ -67,6 +81,27 @@ const PrestamosActivos = ({filterSearch}) => {
             sortable: true
         }
     ]
+
+    /* FUNCIONES AL MONTAR EL COMPONENTE */
+    useEffect(() => {
+        axios.get(url)
+            .then(response => {
+                setData(response.data);
+                setRecords(response.data)
+            })
+            .catch(error => {
+                try {
+                    alert(error.response.data.message.error_text);
+                } catch (e) {
+                    alert("Error al intentar establecer la conexión con el servidor")
+                }
+            })
+            .finally(() => {
+                setLoading(false);
+            })
+
+    }, [url]);
+
 
     /* MANEJADOR DEL filterSearch */
     useEffect(()=>{
@@ -84,16 +119,14 @@ const PrestamosActivos = ({filterSearch}) => {
         }
     },[filterSearch, data])
 
-    
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
+
 
     return (
-        <div >
+        <>
             <DataTable
-                fixedHeader = {true}
                 columns={columns}
                 data={records}
+                fixedHeader={true}
                 pagination
                 persistTableHead={true}
                 paginationPerPage={8}/* 
@@ -119,18 +152,13 @@ const PrestamosActivos = ({filterSearch}) => {
                             minHeight: '5.5vh'
                         }
                     },
-                    header:{
-                        style: {
-                            borderColor: 'red'
-                        }
-                    },
                 }}
             />
-        </div>
+        </>
     )
 
 
 
 }
 
-export default PrestamosActivos;
+export default ListaPrestamos;

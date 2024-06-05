@@ -1,7 +1,7 @@
 import React from "react";
 import './ModalAddPrestamo.css'
 
-const ModalAddPrestamo = ({setOpenModalPrestamos}) => {
+const ModalAddPrestamo = ({ setOpenModalPrestamos }) => {
 
   return (
     <div className="modalBackground">
@@ -11,14 +11,14 @@ const ModalAddPrestamo = ({setOpenModalPrestamos}) => {
           <div className="row">
             <div className="input-group">
               <label htmlFor="tipo">Tipo de herramienta:</label>
-              <select id="tipo">
+              <select id="tipo" className="selectric">
                 <option value="">Seleccionar</option>
                 {/*  <!-- Opciones del combobox Tipo --> */}
               </select>
             </div>
             <div className="input-group">
               <label htmlFor="id-herramienta">ID Herramienta:</label>
-              <select id="id-herramienta">
+              <select id="id-herramienta" className="selectric">
                 <option value="">Seleccionar</option>
                 {/* <!-- Opciones del combobox ID Herramienta --> */}
               </select>
@@ -27,23 +27,33 @@ const ModalAddPrestamo = ({setOpenModalPrestamos}) => {
           <div className="row">
             <div className="input-group">
               <label htmlFor="solicita">Solicita:</label>
-              <input type="text" id="solicita" />
+              <input type="text" id="solicita" className="selectric" />
             </div>
             <div className="input-group">
               <label htmlFor="carrera">Carrera:</label>
-              <select id="carrera">
+              <select id="carrera" className="selectric">
                 <option value="">Seleccionar</option>
                 {/* <!-- Opciones del combobox Carrera --> */}
               </select>
             </div>
           </div>
+
+
+          <div className="row justify-content-center">
+            <div className="col-auto">
+              <p></p>
+              <p className="text-center">Solicitante encontrado: </p>
+            </div>
+          </div>
+
+
           <div className="input-group">
             <label htmlFor="observaciones">Observaciones:</label>
             <textarea id="observaciones" rows="5" maxLength="255"></textarea>
           </div>
           <div className="button-group">
             <button type="submit" id="submit-btn">Enviar</button>
-            <button type="button" id="cancel-btn" onClick={()=>{setOpenModalPrestamos(false)}}>Cancelar</button>
+            <button type="button" id="cancel-btn" onClick={() => { setOpenModalPrestamos(false) }}>Cancelar</button>
           </div>
         </div>
       </div>

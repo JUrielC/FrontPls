@@ -11,14 +11,14 @@ const ModalAddHerramienta = ({setOpenModalAddHerramienta}) => {
           <div className="row">
             <div className="input-group">
               <label htmlFor="tipo">Tipo:</label>
-              <select id="tipo">
+              <select id="tipo" className="selectric">
                 <option value="">Seleccionar</option>
                 {/*  <!-- Opciones del combobox Tipo --> */}
               </select>
             </div>
             <div className="input-group">
               <label htmlFor="origen">Origen:</label>
-              <select id="origen">
+              <select id="origen" className="selectric">
                 <option value="">Seleccionar</option>
                 {/* <!-- Opciones del combobox ID Herramienta --> */}
               </select>
@@ -27,7 +27,7 @@ const ModalAddHerramienta = ({setOpenModalAddHerramienta}) => {
           <div className="row">
             <div className="input-group">
               <label htmlFor="cantidad">Cantidad:</label>
-              <input type="number" id="cantidad" />
+              <input type="number" id="cantidad" className="selectric"/>
             </div>
             {/* <div className="input-group">
               <label for="carrera">Carrera:</label>
