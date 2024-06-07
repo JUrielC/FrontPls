@@ -18,18 +18,21 @@ const useGetWithAuth = (url, setRecords) => {
                     }
                 });
                 setData(response.data);
-                setRecords(response.data)
+                //console.log(data)
+                if (setRecords) {
+                    setRecords(response.data)
+                }
             } catch (err) {
                 if (err.response && err.response.data && err.response.data.message) {
-                    if(err.response.data.message.status === 401){
+                    if (err.response.data.message.status === 401) {
                         localStorage.clear()
                         navigate('/login')
                     }
                     /* alert(err.response.data.message.error_text) */;
                     setError(err.response.data.message.error_text)
-                    
+
                 } else {
-                   // alert("Error al intentar establecer la conexión con el servidor");
+                    // alert("Error al intentar establecer la conexión con el servidor");
                     setError("Error al intentar establecer la conexión con el servidor");
                 }
             } finally {

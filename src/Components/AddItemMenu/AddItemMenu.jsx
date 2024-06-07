@@ -14,7 +14,7 @@ const AddItemMenu = (
                 <button className="if-dropdown-toggle nav-link message-toggle">
                     <i className="fa fa-plus"></i>
                 </button>
-                <div className="if-dropdown-menu">
+                <div className="if-dropdown-menu  dropdown-menu-right">
 
                     <button onClick={() => {
                         setOpenModalPrestamos(true)

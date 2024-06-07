@@ -129,8 +129,21 @@ const Sidebar = ({
                             <span>Usuarios</span>
                         </a>
                         <ul className="dropdown-menu">
-                            <li><a /* className="nav-link" */ href="">Usuarios</a></li>
-                            <li><a /* className="nav-link" */ href="">Solicitantes</a></li>
+                            <li><a /* className="nav-link" */ href="" onClick={
+                                (e)=>{
+                                    e.preventDefault();
+                                    showComponent(setShowUsuarios)
+                                    setlabelTitleTable('Usuarios')
+
+                                }
+                            }>Usuarios</a></li>
+                            <li><a /* className="nav-link" */ href="" onClick={
+                                (e) => {
+                                    e.preventDefault();
+                                    showComponent(setShowSolicitantes)
+                                    setlabelTitleTable('Solicitantes')
+                                }
+                            }>Solicitantes</a></li>
                         </ul>
                     </li>
 

@@ -1,6 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-
-.modalBackground {
+.mresp-modalBackground {
     width: 100%;
     height: 100%;
     background-color: rgba(200, 200, 200, 0.5); /* Asegúrate de que el fondo sea semi-transparente */
@@ -13,22 +11,24 @@
     padding: 0;
     z-index: 1000; /* Ajusta este valor si es necesario */
   }
-
-
   
-  .modalContainer {
-    width: 137vh;
-    height: 80vh;
+  
+  
+  .mresp-modalContainer {
+    width: 90vh;
+    height: 30vh;
     border-radius: 12px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: flex;
     flex-direction: column;
     padding: 5px;
+    padding-top: 2%;
     position: relative;
     z-index: 1001; 
+    overflow: auto;
   }
-
+  
   /* 
    width: 80%;
   max-width: 600px; 
@@ -38,7 +38,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   */
   
-  .modalContainer .title {
+  .mresp-modalContainer .title {
     display: -block;
     text-align:start;
     margin-top: 10px;
@@ -56,7 +56,7 @@
     cursor: pointer;
   }
   
-  .modalContainer .body {
+  .mresp-modalContainer .body {
     flex: 50%;
     display: flex;
     justify-content: center;
@@ -65,14 +65,14 @@
     text-align: center;
   }
   
-  .modalContainer .footer {
+  .mresp-modalContainer .footer {
     flex: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
-  .modalContainer .footer button {
+  .mresp-modalContainer .footer button {
     width: 150px;
     height: 45px;
     margin: 0px;
@@ -85,34 +85,12 @@
     cursor: pointer;
   }
   
-  #cancelBtn {
-    background-color: crimson;
+
+
+
+  .form-container::-webkit-scrollbar {
+    display: none;
   }
-
-
-
-
-
-
-
-
-
-.body {
-    font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .form-container {
-    overflow: auto;
-    width: 100%;
-    height: 100%;
-    margin: 0px auto;
-    padding: 15px;
-    border:none;
-    border-radius: 5px;
-  }
-  
   .form-container h2 {
     text-align: center;
   }
@@ -127,17 +105,11 @@
     flex: 1;
     margin-right: 0px;
     margin-left: 5px;
-    
-    background-color: #fdfdff;
-    border-color: #e4e6fc;
   }
   
   .input-group label {
     display: block;
     margin-bottom: 5px;
-    
-    background-color: #fdfdff;
-    border-color: #e4e6fc;
   }
   
   .input-group select,
@@ -154,11 +126,18 @@
     margin-top: 20px;
     box-sizing: border-box; 
   }
+
+  #message{
+    
+    text-align: center;
+    margin-top: 20px;
+    box-sizing: border-box; 
+  }
   
   .button-group button {
     width: 150px; /* Ancho fijo para todos los botones */
     padding: 10px 0; /* Ajusta el espaciado vertical si es necesario */
-    margin: 10px 10px;
+    margin: 10 10px;
     border: none;
     border-radius: 5px;
     background-color:  #49b3ee;
@@ -166,7 +145,13 @@
     cursor: pointer;
   }
   
+  #nombreTipo {
+    text-align: center;
+  }
+  
+  
   .button-group button:hover {
     background-color: #3f18a5;
   }
+  
   

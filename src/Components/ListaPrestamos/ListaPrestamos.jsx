@@ -1,20 +1,18 @@
 import DataTable from 'react-data-table-component'
 import { ApiUrl } from '../../services/apirest'
 import axios from 'axios'
-//import ToolTipForCells from '../TooltipForCells/ToolTipForCells';
 import { useEffect, useState } from 'react';
+import useGetWithAuth from '../../Hooks/useGetWithAUTH';
 import './ListaPrestamos.css'
-//import { response } from 'express';
 
 
 /* LA PROP CORRESPONDE A LOS VALORES QUE SE QUIEREN BUSCAR EN LA TABLA A TRAVÉS DEL CUADRO DE BUSQUEDA */
 const ListaPrestamos = ({filterSearch}) => {
 
-    const [data, setData] = useState([]);
     const [records, setRecords] = useState([])
-    const [loading, setLoading] = useState(true);
     let url = ApiUrl + "prestamos/"
     
+    const { data, loading, error } = useGetWithAuth(url, setRecords)
     /* COLUMNAS DE LA TABLA */
     const columns = [
         {
@@ -82,26 +80,6 @@ const ListaPrestamos = ({filterSearch}) => {
         }
     ]
 
-    /* FUNCIONES AL MONTAR EL COMPONENTE */
-    useEffect(() => {
-        axios.get(url)
-            .then(response => {
-                setData(response.data);
-                setRecords(response.data)
-            })
-            .catch(error => {
-                try {
-                    alert(error.response.data.message.error_text);
-                } catch (e) {
-                    alert("Error al intentar establecer la conexión con el servidor")
-                }
-            })
-            .finally(() => {
-                setLoading(false);
-            })
-
-    }, [url]);
-
 
     /* MANEJADOR DEL filterSearch */
     useEffect(()=>{
@@ -119,7 +97,8 @@ const ListaPrestamos = ({filterSearch}) => {
         }
     },[filterSearch, data])
 
-
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
 
     return (
         <>

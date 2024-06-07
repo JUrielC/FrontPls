@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import PrestamosActivos from '../PrestamosActivos/PrestamosActivos'
 import PrestamosConcluidos from '../PrestamosConcluidos/PrestamosConcluidos';
 import InvHerramientas from '../InvHerramientas/InvHerramientas';
 import InvTipHerramientas from '../InvTipHerramientas/InvTipHerramientas';
 import ListaPrestamos from '../ListaPrestamos/ListaPrestamos';
+import Usuarios from '../Usuarios/Usuarios';
+import Solicitantes from '../Solicitantes/Solicitantes';
 import AddItemMenu from '../AddItemMenu/AddItemMenu'
 import DropdownUserLogged from '../DropdownUserLogged/DropdownUserLogged';
 import ModalAddPrestamo from '../ModalAddPrestamo/ModalAddPrestamo';
@@ -12,6 +15,7 @@ import ModalAddTipoHerr from '../ModalAddTipoHerr/ModalAddTipoHerr';
 import ModalAddUser from '../ModalAddUser/ModalAddUser';
 import Sidebar from '../Sidebar/Sidebar';
 import CboxFilter from '../CboxFilter/CboxFilter';
+import ModalResponse from '../ModalResponse/ModalResponse';
 import './InicioForm.css'
 
 
@@ -64,7 +68,11 @@ const InicioForm = () => {
         setselectedFilterOrigen(event.target.value);
     };
 
+    const navigate = useNavigate()
     useEffect(() => {
+        if(!localStorage.getItem('token')){
+            navigate('/login')
+        }
     }, [])
 
 
@@ -159,10 +167,11 @@ const InicioForm = () => {
                                         </p> */}
                                     </div>
 
-                                    {openModalPrestamos && <ModalAddPrestamo setOpenModalPrestamos={setOpenModalPrestamos} />}
-                                    {openModalAddHerramienta && <ModalAddHerramienta setOpenModalAddHerramienta={setOpenModalAddHerramienta} />}
+                                    {openModalPrestamos && <ModalAddPrestamo setOpenModalPrestamos={setOpenModalPrestamos} setShowPrestActivos={setShowPrestActivos} showPrestActivos={showPrestActivos}/>}
+                                    {openModalAddHerramienta && <ModalAddHerramienta setOpenModalAddHerramienta={setOpenModalAddHerramienta} showInvHerramientas={showInvHerramientas} setShowHerramientas={setShowHerramientas}/>}
                                     {openModalAddTipoHerr && <ModalAddTipoHerr setOpenModalAddTipoHerr={setOpenModalAddTipoHerr} />}
                                     {openModalAddUser && <ModalAddUser setOpenModalAddUser={setOpenModalAddUser} />}
+                                    {/* {<ModalResponse/>} */}
 
 
                                     <div className="card-body">
@@ -170,8 +179,12 @@ const InicioForm = () => {
                                         {showPrestConcluidos && <PrestamosConcluidos filterSearch={valueSearch} />}
                                         {showListPrestamos && <ListaPrestamos filterSearch={valueSearch} />}
                                         {showInvHerramientas && <InvHerramientas
-                                            filterSearch={valueSearch} cboxFilterEstatus={selectedFilterEstatus} cboxFilterOrigen={selectedFilterOrigen} />}
+                                            filterSearch={valueSearch} cboxFilterEstatus={selectedFilterEstatus} 
+                                            setCboxFilterEstatus={setselectedFilterEstatus} cboxFilterOrigen={selectedFilterOrigen} 
+                                            setCboxFilterOrigen={setselectedFilterOrigen}/>}
                                         {showTiposHerramientas && <InvTipHerramientas filterSearch={valueSearch} />}
+                                        {showUsuarios && <Usuarios filterSearch={valueSearch}/> }
+                                        {showSolicitantes && <Solicitantes filterSearch={valueSearch}/>}
                                     </div>
                                 </div>
                                 {/* </div> */}

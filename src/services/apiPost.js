@@ -1,0 +1,26 @@
+// api.js
+import axios from 'axios';
+
+const enviarDatos = async (url, data) => {
+    try {
+        const response = await axios.post(url, data, {
+            headers: {
+                Authorization: localStorage.getItem('token')
+            }
+        });
+        console.log(response.data.message.messageText)
+        return response.data.message.messageText;
+
+    } catch (error) {
+        if (error.response.data.message.error_text) {
+            console.log(error.response.data.message.error_text)
+            return error.response.data.message.error_text
+        }
+        else {
+            return ('Error al intentar conectarse al servidor');
+        }
+        // Manejar errores, por ejemplo lanzar una excepción o devolver un mensaje de error
+    }
+};
+
+export default enviarDatos;

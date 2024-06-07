@@ -8,7 +8,6 @@ import useGetWithAuth from '../../Hooks/useGetWithAUTH';
 //import { response } from 'express';
 
 
-/* LA PROP CORRESPONDE A LOS VALORES QUE SE QUIEREN BUSCAR EN LA TABLA A TRAVÉS DEL CUADRO DE BUSQUEDA */
 const PrestamosActivos = ({filterSearch}) => {
 
     const [records, setRecords] = useState([])  

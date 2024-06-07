@@ -1,32 +1,20 @@
 import DataTable from 'react-data-table-component'
 import { ApiUrl } from '../../services/apirest'
 import axios from 'axios'
-//import ToolTipForCells from '../TooltipForCells/ToolTipForCells';
 import { useEffect, useState } from 'react';
-import './InvHerramientas.css'
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
 import ModalContainer from '../ModalesInfoTabla/ModalContainer'
-//import { response } from 'express';
 
 
-/* LA PROP CORRESPONDE A LOS VALORES QUE SE QUIEREN BUSCAR EN LA TABLA A TRAVÉS DEL CUADRO DE BUSQUEDA */
-const InvHerramientas = ({ filterSearch, cboxFilterEstatus,setCboxFilterEstatus, cboxFilterOrigen, setCboxFilterOrigen }) => {
+
+const Solicitantes = ({ filterSearch }) => {
 
     const [records, setRecords] = useState([])
-    let url = ApiUrl + "herramientas/"
+    let url = ApiUrl + "solicitantes/"
 
 
     const { data, loading, error } = useGetWithAuth(url, setRecords)
 
-    useEffect(()=>{
-        if (loading || error || !data) {
-            return;
-        }
-
-        setCboxFilterEstatus('')
-        setCboxFilterOrigen('')
-
-    },[loading, error, data])
 
     useEffect(() => {
         if (loading || error || !data) {
@@ -35,10 +23,8 @@ const InvHerramientas = ({ filterSearch, cboxFilterEstatus,setCboxFilterEstatus,
 
         const newFilteredData = data.filter(
             item => {
-                const matchSearched = item.nombre_tipo && item.nombre_tipo.toLowerCase().includes(filterSearch.toLowerCase())
-                const matchFilterEstatus = cboxFilterEstatus === "" || item.nombre_estatus === cboxFilterEstatus /**/
-                const matchFilterOrigen = cboxFilterOrigen === "" ||( item.nombre_origen) === cboxFilterOrigen
-                return matchSearched && matchFilterEstatus && matchFilterOrigen;
+                const matchSearched = item.nombre && item.nombre.toLowerCase().includes(filterSearch.toLowerCase())
+                return matchSearched 
             }
 
         )
@@ -48,52 +34,45 @@ const InvHerramientas = ({ filterSearch, cboxFilterEstatus,setCboxFilterEstatus,
 
 
 
-    }, [data, loading, error, filterSearch, cboxFilterEstatus, cboxFilterOrigen])
+    }, [data, loading, error, filterSearch])
 
     /* COLUMNAS DE LA TABLA */
     const columns = [
         {
             name: "ID",
-            selector: row => row.id_herramienta,
-            sortable: true,
-            width: "6rem"
+            selector: row => row.id_solicitante,
+            sortable: true
         },
         {
-            name: "Tipo",
-            selector: row => row.nombre_tipo,
+            name: "Nombre(s)",
+            selector: row => row.nombre,
             sortable: true,
 
+        }, {
+            name: "Apellido 1",
+            selector: row => row.apellido_paterno,
+            sortable: true,
+        }, 
+        {
+            name: "Apellido 2",
+            selector: row => row.apellido_materno,
+            sortable: true,
         },
         {
-            name: "Estatus",
-            selector: row => row.nombre_estatus,
+            name: "NO. Ctrl/Nom",
+            selector: row => row.control_nomina,
             sortable: true,
-
         },
         {
-            name: "Origen",
-            selector: row => row.nombre_origen,
+            name: "Teléfono",
+            selector: row => row.telefono,
             sortable: true,
-
         },
         {
-            name: "Fecha de registro",
-            selector: row => row.fecha_alta,
+            name: "Mail",
+            selector: row => row.mail,
             sortable: true,
-
-        },
-        {
-            name: "Observaciones",
-            selector: row => row.observaciones,
-            sortable: true,
-
-        },
-        {
-            name: "Usuario",
-            selector: row => row.usuario,
-            sortable: true,
-            width: "10rem"
-        }
+        }  
     ]
 
 
@@ -118,12 +97,6 @@ const InvHerramientas = ({ filterSearch, cboxFilterEstatus,setCboxFilterEstatus,
                 onRowClicked={(data) => { console.log(data.id_herramienta) }}  // Manejar clic en la fila
                 highlightOnHover  // Resaltar la fila al pasar el ratón por encima
                 pointerOnHover    // Mostrar puntero al pasar el ratón por encima
-                progressComponent={
-                    <div>
-                        <p></p>
-                        <div id='spinner'></div>
-                    </div>
-                }
                 customStyles={{
                     table: {
                         style: {
@@ -146,4 +119,4 @@ const InvHerramientas = ({ filterSearch, cboxFilterEstatus,setCboxFilterEstatus,
 
 }
 
-export default InvHerramientas;
+export default Solicitantes;
