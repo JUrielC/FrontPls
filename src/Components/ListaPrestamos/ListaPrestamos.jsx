@@ -3,7 +3,8 @@ import { ApiUrl } from '../../services/apirest'
 import axios from 'axios'
 import { useEffect, useState } from 'react';
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
-import './ListaPrestamos.css'
+import ModInfoPrestConcluido from '../ModalesInfoTabla/ModInfoPrestConcluido';
+import './ListaPrestamos.css' 
 
 
 /* LA PROP CORRESPONDE A LOS VALORES QUE SE QUIEREN BUSCAR EN LA TABLA A TRAVÉS DEL CUADRO DE BUSQUEDA */
@@ -13,6 +14,14 @@ const ListaPrestamos = ({filterSearch}) => {
     let url = ApiUrl + "prestamos/"
     
     const { data, loading, error } = useGetWithAuth(url, setRecords)
+
+    
+    /* Mostrar modal de info de fila */
+    const [openModalInfo, setOpenModalInf] = useState(false)
+
+    /* Data de la fila */
+    const [dataRow, setDataRow] = useState(null)
+
     /* COLUMNAS DE LA TABLA */
     const columns = [
         {
@@ -83,6 +92,9 @@ const ListaPrestamos = ({filterSearch}) => {
 
     /* MANEJADOR DEL filterSearch */
     useEffect(()=>{
+        if (loading || error || !data) {
+          return;
+        }
         const trimmedFilterSearch = filterSearch.trim();
         if(trimmedFilterSearch === ""){
             setRecords(data)
@@ -95,13 +107,14 @@ const ListaPrestamos = ({filterSearch}) => {
 
               setRecords(newFilteredData)
         }
-    },[filterSearch, data])
+    },[filterSearch, data, loading, error])
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     return (
         <>
+        {openModalInfo && <ModInfoPrestConcluido setOpenModalInf={setOpenModalInf} data={dataRow}></ModInfoPrestConcluido>}
             <DataTable
                 columns={columns}
                 data={records}
@@ -112,7 +125,11 @@ const ListaPrestamos = ({filterSearch}) => {
                 selectableRows */
                 progressPending={loading}
                 paginationRowsPerPageOptions={[6, 8, 10, 15, 20, 25, 30]}
-                onRowClicked={(data) => { console.log(data.id_herramienta) }}  // Manejar clic en la fila
+                onRowClicked={(data) => { 
+                    //console.log(data)
+                    setDataRow(data)
+                    setOpenModalInf(true)
+                }} // Manejar clic en la fila
                 highlightOnHover  // Resaltar la fila al pasar el ratón por encima
                 pointerOnHover    // Mostrar puntero al pasar el ratón por encima
                 progressComponent={

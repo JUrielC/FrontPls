@@ -1,9 +1,9 @@
 // api.js
 import axios from 'axios';
 
-const enviarDatos = async (url, data) => {
+const actualizarDatos = async (url, data) => {
     try {
-        const response = await axios.post(url, data, {
+        const response = await axios.put(url, data, {
             headers: {
                 Authorization: localStorage.getItem('token')
             }
@@ -11,9 +11,8 @@ const enviarDatos = async (url, data) => {
         return response.data.message.messageText;
 
     } catch (error) {
-        
         if (error.response.data.message.error_text) {
-            return error.response.data.message.error_text
+            return error.response.data.message.error_text 
         }
         else {
             return ('Error al intentar conectarse al servidor');
@@ -22,4 +21,4 @@ const enviarDatos = async (url, data) => {
     }
 };
 
-export default enviarDatos;
+export default actualizarDatos;

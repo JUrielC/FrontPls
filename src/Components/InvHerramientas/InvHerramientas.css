@@ -1,0 +1,21 @@
+   
+  .invherr-button-group {
+    text-align: center;
+    margin-top: 20px;
+    box-sizing: border-box; 
+  }
+  
+  .invherr-button-group button {
+    width: 50px; /* Ancho fijo para todos los botones */
+    padding: 10px 0; /* Ajusta el espaciado vertical si es necesario */
+    margin: 10 10px;
+    border: none;
+    border-radius: 5px;
+    background-color:  #49b3ee;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .invherr-button-group button:hover {
+    background-color: #3f18a5;
+  }

@@ -6,13 +6,16 @@ import { useEffect, useState } from 'react';
 import './InvHerramientas.css'
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
 import ModalContainer from '../ModalesInfoTabla/ModalContainer'
+import ModalInfoHerramienta from '../ModalesInfoTabla/ModalInfoHerramienta';
 //import { response } from 'express';
 
 
 /* LA PROP CORRESPONDE A LOS VALORES QUE SE QUIEREN BUSCAR EN LA TABLA A TRAVÉS DEL CUADRO DE BUSQUEDA */
-const InvHerramientas = ({ filterSearch, cboxFilterEstatus,setCboxFilterEstatus, cboxFilterOrigen, setCboxFilterOrigen }) => {
+const InvHerramientas = ({ filterSearch,  cboxFilterEstatus,setCboxFilterEstatus, cboxFilterOrigen, setCboxFilterOrigen, showInvHerramientas, setShowHerramientas }) => {
 
     const [records, setRecords] = useState([])
+    const [mostarInfo, setMostrarInfo] = useState(false)
+    const[dataRow, setDataRow] = useState(null)
     let url = ApiUrl + "herramientas/"
 
 
@@ -93,9 +96,24 @@ const InvHerramientas = ({ filterSearch, cboxFilterEstatus,setCboxFilterEstatus,
             selector: row => row.usuario,
             sortable: true,
             width: "10rem"
-        }
+        },
+        {
+          // Columna de botones
+          name: 'Acciones',
+          cell: row => (
+            <div className='invherr-button-group'>
+              {/* Botón de Editar */}
+              <button onClick={() =>{}}>Editar</button>
+              {/* Botón de Eliminar */}
+              <button onClick={() => {}}>Eliminar</button>
+            </div>
+          ),
+          ignoreRowClick: false, // No permitir hacer clic en la fila para esta columna
+          allowOverflow: true, // Permitir que los botones se desborden de la celda
+          button: true, // Indicar que los elementos son botones
+        },
     ]
-
+ 
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -103,8 +121,8 @@ const InvHerramientas = ({ filterSearch, cboxFilterEstatus,setCboxFilterEstatus,
     
 
     return (
-        <>
-            {/* <ModalContainer></ModalContainer> */}
+        <> {mostarInfo &&
+            <ModalInfoHerramienta data = {dataRow} setMostrarInfo={setMostrarInfo} showInvHerramientas={showInvHerramientas} setShowHerramientas={setShowHerramientas}></ModalInfoHerramienta>} 
             <DataTable
                 columns={columns}
                 data={records}
@@ -115,7 +133,11 @@ const InvHerramientas = ({ filterSearch, cboxFilterEstatus,setCboxFilterEstatus,
                 selectableRows */
                 progressPending={loading}
                 paginationRowsPerPageOptions={[6, 8, 10, 15, 20, 25, 30]}
-                onRowClicked={(data) => { console.log(data.id_herramienta) }}  // Manejar clic en la fila
+                onRowClicked={(data) => { 
+                    console.log(data) 
+                    setDataRow(data)
+                    setMostrarInfo(true)
+                }}  // Manejar clic en la fila
                 highlightOnHover  // Resaltar la fila al pasar el ratón por encima
                 pointerOnHover    // Mostrar puntero al pasar el ratón por encima
                 progressComponent={

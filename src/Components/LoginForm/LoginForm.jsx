@@ -29,8 +29,6 @@ const LoginForm = ()=>{
             localStorage.setItem('user', response.data.user_data)
             navigate("/inicio")
             window.location.reload()
-            //console.log(response)
-            //alert('BIen!!!!!!!!!!!!!!!!!!')
         })
         .catch(error=>{
             try{

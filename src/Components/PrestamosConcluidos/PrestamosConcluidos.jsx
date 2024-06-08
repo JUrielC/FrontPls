@@ -4,6 +4,7 @@ import axios from 'axios'
 import '../TooltipForCells/ToolTipForCells.css'
 import { useEffect, useState } from 'react';
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
+import ModInfoPrestConcluido from '../ModalesInfoTabla/ModInfoPrestConcluido';
 import './PrestamosConcluidos.css'
 
 
@@ -14,6 +15,12 @@ const PrestamosConcluidos = ({filterSearch}) => {
     let url = ApiUrl + "prestamos/prestamos_concluidos"
     
     const { data, loading, error } = useGetWithAuth(url, setRecords)
+
+    /* Mostrar modal de info de fila */
+    const [openModalInfo, setOpenModalInf] = useState(false)
+
+    /* Data de la fila */
+    const [dataRow, setDataRow] = useState(null)
 
     /* COLUMNAS DE LA TABLA */
     const columns = [
@@ -85,6 +92,9 @@ const PrestamosConcluidos = ({filterSearch}) => {
 
     /* MANEJADOR DEL filterSearch */
     useEffect(()=>{
+        if (loading || error || !data) {
+          return;
+        }
         const trimmedFilterSearch = filterSearch.trim();
         if(trimmedFilterSearch === ""){
             setRecords(data)
@@ -97,7 +107,7 @@ const PrestamosConcluidos = ({filterSearch}) => {
 
               setRecords(newFilteredData)
         }
-    },[filterSearch, data])
+    },[filterSearch, data, loading, error])
 
 
     
@@ -105,7 +115,8 @@ const PrestamosConcluidos = ({filterSearch}) => {
     if (error) return <p>Error: {error}</p>;
 
     return (
-        <>
+        <div>  
+            {openModalInfo && <ModInfoPrestConcluido setOpenModalInf={setOpenModalInf} data={dataRow}></ModInfoPrestConcluido>}
             <DataTable
                 columns={columns}
                 data={records}
@@ -115,7 +126,11 @@ const PrestamosConcluidos = ({filterSearch}) => {
                 selectableRows */
                 progressPending={loading}
                 paginationRowsPerPageOptions={[7, 8, 10, 15, 20, 25, 30]}
-                onRowClicked={(data) => { console.log(data.id_herramienta) }}  // Manejar clic en la fila
+                onRowClicked={(data) => { 
+                    //console.log(data)
+                    setDataRow(data)
+                    setOpenModalInf(true)
+                }}  // Manejar clic en la fila
                 highlightOnHover  // Resaltar la fila al pasar el ratón por encima
                 pointerOnHover    // Mostrar puntero al pasar el ratón por encima
                 progressComponent={
@@ -136,7 +151,7 @@ const PrestamosConcluidos = ({filterSearch}) => {
                     },
                 }}
             />
-        </>
+        </div>
     )
 
 

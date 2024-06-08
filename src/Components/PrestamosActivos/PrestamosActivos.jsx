@@ -5,14 +5,19 @@ import '../TooltipForCells/ToolTipForCells.css'
 import { useEffect, useState } from 'react';
 import './PrestamosActivos.css'
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
+import ModInfoPrestActivo from '../ModalesInfoTabla/ModInfoPrestActivo';
+import Modal from 'react-modal'
 //import { response } from 'express';
 
 
-const PrestamosActivos = ({filterSearch}) => {
+const PrestamosActivos = ({ filterSearch, showPrestActivos, setShowPrestActivos }) => {
 
-    const [records, setRecords] = useState([])  
+    const [records, setRecords] = useState([])
     let url = ApiUrl + "prestamos/prestamos_activos"
-    
+
+    const [openModalInf, setOpenModalInf] = useState(false)
+    const [dataRow, setDataRow] = useState(null)
+
     const { data, loading, error } = useGetWithAuth(url, setRecords)
 
     /* COLUMNAS DE LA TABLA */
@@ -60,7 +65,7 @@ const PrestamosActivos = ({filterSearch}) => {
             selector: row => row.fecha_prestamo,
             sortable: true
         },
-        {
+        { 
             name: "Observaciones",
             selector: row => row.observaciones,
             sortable: true
@@ -68,29 +73,33 @@ const PrestamosActivos = ({filterSearch}) => {
     ]
 
     /* MANEJADOR DEL filterSearch */
-    useEffect(()=>{
+    useEffect(() => {
+        if (loading || error || !data) {
+            return;
+        }
         const trimmedFilterSearch = filterSearch.trim();
-        if(trimmedFilterSearch === ""){
+        if (trimmedFilterSearch === "") {
             setRecords(data)
         }
-        else{
+        else {
             const newFilteredData = data.filter(
                 item =>
-                item.solicitante && item.solicitante.toLowerCase().includes(trimmedFilterSearch.toLowerCase())
-              ) 
+                    item.solicitante && item.solicitante.toLowerCase().includes(trimmedFilterSearch.toLowerCase())
+            )
 
-              setRecords(newFilteredData)
+            setRecords(newFilteredData)
         }
-    },[filterSearch, data])
+    }, [filterSearch, data, loading, error])
 
-    
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     return (
         <div >
+           { openModalInf && < ModInfoPrestActivo data = {dataRow} setOpenModalInf = {setOpenModalInf} showPrestActivos={showPrestActivos} setShowPrestActivos={setShowPrestActivos}></ModInfoPrestActivo> }
             <DataTable
-                fixedHeader = {true}
+                fixedHeader={true}
                 columns={columns}
                 data={records}
                 pagination
@@ -99,7 +108,11 @@ const PrestamosActivos = ({filterSearch}) => {
                 selectableRows */
                 progressPending={loading}
                 paginationRowsPerPageOptions={[6, 8, 10, 15, 20, 25, 30]}
-                onRowClicked={(data) => { console.log(data.id_herramienta) }}  // Manejar clic en la fila
+                onRowClicked={(data) => { 
+                    //console.log(data)
+                    setDataRow(data)
+                    setOpenModalInf(true)
+                }}  // Manejar clic en la fila
                 highlightOnHover  // Resaltar la fila al pasar el ratón por encima
                 pointerOnHover    // Mostrar puntero al pasar el ratón por encima
                 progressComponent={
@@ -118,7 +131,7 @@ const PrestamosActivos = ({filterSearch}) => {
                             minHeight: '5.5vh'
                         }
                     },
-                    header:{
+                    header: {
                         style: {
                             borderColor: 'red'
                         }

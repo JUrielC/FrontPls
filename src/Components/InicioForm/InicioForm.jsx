@@ -169,19 +169,22 @@ const InicioForm = () => {
 
                                     {openModalPrestamos && <ModalAddPrestamo setOpenModalPrestamos={setOpenModalPrestamos} setShowPrestActivos={setShowPrestActivos} showPrestActivos={showPrestActivos}/>}
                                     {openModalAddHerramienta && <ModalAddHerramienta setOpenModalAddHerramienta={setOpenModalAddHerramienta} showInvHerramientas={showInvHerramientas} setShowHerramientas={setShowHerramientas}/>}
-                                    {openModalAddTipoHerr && <ModalAddTipoHerr setOpenModalAddTipoHerr={setOpenModalAddTipoHerr} />}
-                                    {openModalAddUser && <ModalAddUser setOpenModalAddUser={setOpenModalAddUser} />}
+                                    {openModalAddTipoHerr && <ModalAddTipoHerr setOpenModalAddTipoHerr={setOpenModalAddTipoHerr} showTiposHerramientas={showTiposHerramientas} setShowTiposHerramientas={setShowTiposHerramientas} />}
+                                    {openModalAddUser && <ModalAddUser setOpenModalAddUser={setOpenModalAddUser} showUsuarios={showUsuarios} setShowUsuarios={setShowUsuarios}/>}
                                     {/* {<ModalResponse/>} */}
 
 
                                     <div className="card-body">
-                                        {showPrestActivos && <PrestamosActivos filterSearch={valueSearch} />}
+                                        {showPrestActivos && <PrestamosActivos filterSearch={valueSearch} showPrestActivos={showPrestActivos} setShowPrestActivos={setShowPrestActivos}/>}
                                         {showPrestConcluidos && <PrestamosConcluidos filterSearch={valueSearch} />}
                                         {showListPrestamos && <ListaPrestamos filterSearch={valueSearch} />}
                                         {showInvHerramientas && <InvHerramientas
                                             filterSearch={valueSearch} cboxFilterEstatus={selectedFilterEstatus} 
                                             setCboxFilterEstatus={setselectedFilterEstatus} cboxFilterOrigen={selectedFilterOrigen} 
-                                            setCboxFilterOrigen={setselectedFilterOrigen}/>}
+                                            setCboxFilterOrigen={setselectedFilterOrigen}
+                                            showInvHerramientas={showInvHerramientas}
+                                            setShowHerramientas={setShowHerramientas}
+                                            />}
                                         {showTiposHerramientas && <InvTipHerramientas filterSearch={valueSearch} />}
                                         {showUsuarios && <Usuarios filterSearch={valueSearch}/> }
                                         {showSolicitantes && <Solicitantes filterSearch={valueSearch}/>}

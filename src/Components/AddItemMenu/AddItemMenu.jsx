@@ -60,7 +60,6 @@ const AddItemMenu = (
                             setOpenModalPrestamos(false)
                         }
                     }>Usuario</button>
-                    <button className="dropdown-item">Alumno/Maestro</button>
                 </div>
             </li>
         </>

@@ -90,7 +90,7 @@ const ModalAddHerramienta = ({ setOpenModalAddHerramienta, showInvHerramientas, 
               <label for="carrera">Carrera:</label>
               <select id="carrera">
                 <option value="">Seleccionar</option>
-                
+              
               </select>
             </div> */}
           </div>
@@ -111,7 +111,6 @@ const ModalAddHerramienta = ({ setOpenModalAddHerramienta, showInvHerramientas, 
 
                 if (form.id_tipo !== '' && form.id_origen !== '' && form.cantidad !=='0' && form.cantidad !== "" && !(form.cantidad.includes('.'))) {
 
-                  console.log(form)
                   const ruta = ApiUrl + "herramientas/"
                   const response = await enviarDatos(ruta, form)
                   setModalResp(true)

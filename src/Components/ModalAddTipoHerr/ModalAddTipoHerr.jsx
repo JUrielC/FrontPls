@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import useGetWithAuth from '../../Hooks/useGetWithAUTH'
+import { ApiUrl } from "../../services/apirest";
+import enviarDatos from "../../services/apiPost";
+import ModalResponse from "../ModalResponse/ModalResponse";
 import './ModalAddTipoHerr.css'
 
-const ModalAddTipoHerr = ({setOpenModalAddTipoHerr}) => {
+const ModalAddTipoHerr = ({ setOpenModalAddTipoHerr, showTiposHerramientas, setShowTiposHerramientas }) => {
+
+  const [form, setForm] = useState({ nombre_tipo: '', descripcion: '' })
+
+  /*Modal para response del backend*/
+  const [modalResp, setModalResp] = useState(false)
+  const [message, setMessage] = useState('')
+
+
+
 
   return (
     <div className="te-modalBackground">
@@ -12,17 +25,53 @@ const ModalAddTipoHerr = ({setOpenModalAddTipoHerr}) => {
           </div>
           <div className="row">
             <div className="input-group">
+            {modalResp && <ModalResponse setModalResp={setModalResp} message={message} setOpenModalActual={setOpenModalAddTipoHerr}></ModalResponse>}
               <label htmlFor="nombreTipo">Nombre de tipo de herramienta:</label>
-              <input type="text" id="nombreTipo"  maxLength={50} className="selectric"/>
+              <input type="text" id="nombreTipo" autoComplete="off" maxLength={50} className="selectric" onChange={
+                (e) => {
+                  setForm((prevForm) => ({
+                    ...prevForm,
+                    nombre_tipo: e.target.value
+                  }));
+                }
+              } />
             </div>
           </div>
           <div className="input-group">
-            <label htmlFor="observaciones">Observaciones:</label>
-            <textarea id="observaciones" rows="5" maxLength="255"></textarea>
+            <label htmlFor="observaciones">Descripción:</label>
+            <textarea id="observaciones" placeholder="Opcional" rows="5" maxLength="255" onChange={
+              (e) => {
+                setForm((prevForm) => ({
+                  ...prevForm,
+                  descripcion: e.target.value
+                }));
+              }
+            }></textarea>
           </div>
           <div className="button-group">
-            <button type="submit" id="submit-btn">Enviar</button>
-            <button type="button" id="cancel-btn" onClick={()=>{setOpenModalAddTipoHerr(false)}}>Cancelar</button>
+            <button type="submit" id="submit-btn" onClick={
+              async () => {
+                console.log(form)
+                if ((form.nombre_tipo).trim() !== '') {
+
+                  const ruta = ApiUrl + "tipo_herramienta/"
+                  const response = await enviarDatos(ruta, form)
+                  setModalResp(true)
+                  setMessage(response)
+                }
+                else {
+                  setModalResp(true)
+                  setMessage('Ingrese valores válidos')
+                }
+              }
+            }>Enviar</button>
+            <button type="button" id="cancel-btn" onClick={() => { 
+              setOpenModalAddTipoHerr(false)
+              if (showTiposHerramientas) {
+                setShowTiposHerramientas(false);
+                setTimeout(() => setShowTiposHerramientas(true), 0);
+              }
+               }}>Cancelar</button>
           </div>
         </div>
       </div>
