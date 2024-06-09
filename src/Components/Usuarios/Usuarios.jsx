@@ -4,16 +4,22 @@ import axios from 'axios'
 import { useEffect, useState } from 'react';
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
 import ModalContainer from '../ModalesInfoTabla/ModalContainer'
+import actualizarDatos from '../../services/apiPut';
+import ModalEditUsuario from '../ModalesInfoTabla/ModalEditUsuario';
+import ModalResetPass from '../ModalResetPass/ModalResetPass';
 import './Usuarios.css'
 
 
 
-const Usuarios = ({ filterSearch }) => {
+const Usuarios = ({ filterSearch, showUsuarios, setShowUsuarios }) => {
 
     const [records, setRecords] = useState([])
-    let url = ApiUrl + "usuarios"
+    let url = ApiUrl + "usuarios/"
 
     const [dataRow, setDataRow] = useState(null)
+    const [openModalEdit, setOpenModalEdit] = useState(false)
+
+    const [openModalresetPass, setOpenModalResetPass] = useState(false)
 
     const { data, loading, error } = useGetWithAuth(url, setRecords)
 
@@ -84,7 +90,7 @@ const Usuarios = ({ filterSearch }) => {
               <button className='edit' tabIndex={-1} onClick={() =>{
                 //console.log (row)
                 setDataRow(row)
-                //  setOpenModalEdit(true)
+                setOpenModalEdit(true)
               }}><i className="fas fa-edit"></i></button>
             </div>
           ),
@@ -94,20 +100,45 @@ const Usuarios = ({ filterSearch }) => {
         },
         {
           // Columna de botones
-          name: 'Acciones',
+          name: 'Activar',
           cell: row => (
             <div className='invherr-user-button-group'>
               {/* Botón de Eliminar */}
-              <button className='eliminar' tabIndex={-1} onClick={() => {
+              <button className='eliminar' tabIndex={-1} onClick={async() => {
                 setDataRow(row)
-                //setOpenModalDelete(true)
-              }}>{/* <i className="fas fa-trash"></i> */} {row.estatus_activo ? "Desactivar" : "Activar"}</button>
+
+                const ruta = url + "estatus_activo"
+                const response = await actualizarDatos(ruta,{id_usuario: row.id_usuario})
+                alert (response)
+
+                if(showUsuarios){
+                    setShowUsuarios(false)
+                    setTimeout(()=>{setShowUsuarios(true)})
+                }
+
+              }}> {row.estatus_activo ? "Desactivar" : "Activar"}</button>
             </div>
           ),
           fixed: true,
           ignoreRowClick: false, // No permitir hacer clic en la fila para esta columna
           width: '6rem'
-        },
+        },{
+            // Columna de botones
+            name: 'Reset Password',
+            cell: row => (
+              <div className='invherr-user-button-group'>
+                {/* Botón de Eliminar */}
+                <button className='rest-pass' tabIndex={-1} onClick={async() => {
+                 setDataRow(row)
+                 setOpenModalResetPass(true)
+  
+                }}><i class="fas fa-key"></i></button>
+              </div>
+            ),
+            fixed: true,
+            ignoreRowClick: false, // No permitir hacer clic en la fila para esta columna
+            width: '6rem'
+          },
     ]
 
 
@@ -119,6 +150,8 @@ const Usuarios = ({ filterSearch }) => {
     return (
         <>
             {/* <ModalContainer></ModalContainer> */}
+            {openModalresetPass && <ModalResetPass data={dataRow} showTabla={showUsuarios} setShowTabla={setShowUsuarios} openThisModal={setOpenModalResetPass}/>}
+            { openModalEdit && <ModalEditUsuario data ={dataRow} openThisModal={setOpenModalEdit} showUsuarios={showUsuarios} setShowUsuarios={setShowUsuarios}/>}
             <DataTable
                 columns={columns}
                 data={records}

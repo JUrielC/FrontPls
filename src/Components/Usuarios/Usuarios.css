@@ -39,12 +39,12 @@
   }
   
   /* Botón Baja */
-  .invherr-user-button-group .baja {
-    background-color: #1cac7c;
+  .invherr-user-button-group .rest-pass {
+    background-color: #d34054 ;
   }
   
-  .invherr-user-button-group .baja:hover {
-    box-shadow: 0 0 7px rgb(14, 221, 118);
+  .invherr-user-button-group .rest-pass:hover {
+    box-shadow: 0 0 7px rgb(223, 21, 122);
   }
   
   /* Botón Eliminar */

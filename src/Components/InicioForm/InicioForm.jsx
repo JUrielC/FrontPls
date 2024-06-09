@@ -186,7 +186,7 @@ const InicioForm = () => {
                                             setShowHerramientas={setShowHerramientas}
                                             />}
                                         {showTiposHerramientas && <InvTipHerramientas filterSearch={valueSearch} showTiposHerramientas = {showTiposHerramientas} setShowTiposHerramientas={setShowTiposHerramientas}/>}
-                                        {showUsuarios && <Usuarios filterSearch={valueSearch}/> }
+                                        {showUsuarios && <Usuarios filterSearch={valueSearch} showUsuarios={showUsuarios} setShowUsuarios={setShowUsuarios}/> }
                                         {showSolicitantes && <Solicitantes filterSearch={valueSearch}/>}
                                     </div>
                                 </div>

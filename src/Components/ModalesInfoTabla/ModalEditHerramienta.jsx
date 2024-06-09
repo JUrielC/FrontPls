@@ -155,6 +155,14 @@ const ModalInfoHerramienta = ({ data, setMostrarInfo, showInvHerramientas, setSh
 
                 <div className="button-group">
 
+                     <button type="button" id="cancel-btn" onClick={
+                        async () => {
+                            const ruta = ApiUrl + "herramientas/"
+                            const response = await actualizarDatos(ruta, form)
+                            setMessage(response)
+                        }
+                    }>Guardar Cambios</button>
+
                     <button type="button" id="cancel-btn" onClick={
                         () => {
                             setMostrarInfo(false)
@@ -164,14 +172,6 @@ const ModalInfoHerramienta = ({ data, setMostrarInfo, showInvHerramientas, setSh
                             }
                         }
                     } >Cerrar</button>
-
-                     <button type="button" id="cancel-btn" onClick={
-                        async () => {
-                            const ruta = ApiUrl + "herramientas/"
-                            const response = await actualizarDatos(ruta, form)
-                            setMessage(response)
-                        }
-                    }>Guardar Cambios</button>
                 </div>
 
             </div>
