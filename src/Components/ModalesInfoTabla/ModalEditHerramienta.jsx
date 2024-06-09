@@ -1,27 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { ApiUrl } from "../../services/apirest";
 import useGetWithAuth from '../../Hooks/useGetWithAUTH'
-import ModalResponse from "../ModalResponse/ModalResponse";
 import actualizarDatos from "../../services/apiPut";
-import './ModalInfoHerramienta.css'
+import './ModalEditHerramienta.css'
 
 const ModalInfoHerramienta = ({ data, setMostrarInfo, showInvHerramientas, setShowHerramientas }) => {
 
 
-    const funcionCerrar = (modalAbierto) => {
-        if (showInvHerramientas) {
-            console.log("actualizar...");
-            setShowHerramientas(modalAbierto);
-            setTimeout(() => setShowHerramientas(true), 0);
-        }
-    }
+
 
     const urlGetTipos = ApiUrl + "tipo_herramienta"
-    const [editar, setEditar] = useState(false)
-    const [btnEditLabel, setBtnEditLabel] = useState("Editar")
-    const [divVisible, setDivVisible] = useState(true)
     /* Modal response  */
-    const [modalResp, setModalResp] = useState(false)
     const [message, setMessage] = useState('')
 
     const { data: dataTipos, loading: loadingTipos, error: errorTipos } = useGetWithAuth(urlGetTipos, null)
@@ -47,8 +36,8 @@ const ModalInfoHerramienta = ({ data, setMostrarInfo, showInvHerramientas, setSh
 
         <div className="mih-modalBackground">
             <div className="pact-modalContainer">
-                {modalResp && <ModalResponse setModalResp={setModalResp} message={message} setOpenModalActual={funcionCerrar} cerrar = {true}></ModalResponse>}
-                <h4 id="pact-titulo">Detalles</h4>
+               {/*  {modalResp && <ModalResponse setModalResp={setModalResp} message={message} setOpenModalActual={funcionCerrar} cerrar = {true}></ModalResponse>} */}
+                <h4 id="pact-titulo">Editar</h4>
                 <div className="row">
                     <div className="pact-input-group">
                         <label htmlFor=""></label>
@@ -56,7 +45,7 @@ const ModalInfoHerramienta = ({ data, setMostrarInfo, showInvHerramientas, setSh
                         <label htmlFor=""></label>
                     </div>
                 </div>
-                {divVisible &&
+                {/*
 
                     <div className="pact-input-group">
                         <label htmlFor="">ID: <span>{data.id_herramienta}</span></label>
@@ -69,14 +58,19 @@ const ModalInfoHerramienta = ({ data, setMostrarInfo, showInvHerramientas, setSh
                         <label htmlFor="">Fecha de registro: <span>{data.fecha_alta}</span></label>
                         <label htmlFor="">Usuario: <span>{data.usuario}</span></label>
                         <label htmlFor="">Observaciones: <span>{data.observaciones}</span></label>
-                    </div>}
+                    </div>*/}
 
 
 
-                {!divVisible && <div className="maifh-form-container">
+                {<div className="maifh-form-container">
+                    <div className="pact-input-group">
+
+                        <label htmlFor="">{message}</label>
+                    </div>
                     <div className="pact-input-group">
 
                         <label htmlFor="">ID: <span>{data.id_herramienta}</span></label>
+                        <label htmlFor="">Tipo: <span>{data.nombre_tipo}</span></label>
                     </div>
 
                     <div className="input-group">
@@ -160,34 +154,24 @@ const ModalInfoHerramienta = ({ data, setMostrarInfo, showInvHerramientas, setSh
 
 
                 <div className="button-group">
-                    <button type="submit" id="submit-btn" onClick={
-                        (e) => {
-                            if (btnEditLabel === "Editar") {
-                                setBtnEditLabel("Cancelar")
-                                setDivVisible(false)
-                            }
-                            else {
-                                setBtnEditLabel("Editar")
-                                setDivVisible(true)
-                            }
-                        }
-                    } >{btnEditLabel}</button>
-
 
                     <button type="button" id="cancel-btn" onClick={
                         () => {
                             setMostrarInfo(false)
+                            if (showInvHerramientas){
+                                setShowHerramientas (false)
+                                setTimeout(()=>{setShowHerramientas (true)}, 0)
+                            }
                         }
                     } >Cerrar</button>
 
-                    {!divVisible && <button type="button" id="cancel-btn" onClick={
+                     <button type="button" id="cancel-btn" onClick={
                         async () => {
                             const ruta = ApiUrl + "herramientas/"
                             const response = await actualizarDatos(ruta, form)
                             setMessage(response)
-                            setModalResp(true)
                         }
-                    }>Guardar Cambios</button>}
+                    }>Guardar Cambios</button>
                 </div>
 
             </div>

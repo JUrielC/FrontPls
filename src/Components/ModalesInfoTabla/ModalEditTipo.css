@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-.mc-modalBackground {
+.etip-modalBackground {
     width: 100%;
     height: 100%;
     background-color: rgba(200, 200, 200, 0.5); /* Asegúrate de que el fondo sea semi-transparente */
@@ -16,10 +16,10 @@
 
 
   
-  .mc-modalContainer {
-    width: 100vh;
-    height: 80vh;
-   border-radius: 12px; 
+  .etip-modalContainer {
+    width: 99vh;
+    height: 70vh;
+    border-radius: 12px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: flex;
@@ -27,6 +27,7 @@
     padding: 5px;
     position: relative;
     z-index: 1001; 
+    align-items: center;
   }
 
   /* 
@@ -38,7 +39,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   */
   
-  .modalContainer .title {
+  .etip-modalContainer .title {
     display: -block;
     text-align:start;
     margin-top: 10px;
@@ -56,7 +57,7 @@
     cursor: pointer;
   }
   
-  .modalContainer .body {
+  .etip-modalContainer .body {
     flex: 50%;
     display: flex;
     justify-content: center;
@@ -65,14 +66,14 @@
     text-align: center;
   }
   
-  .modalContainer .footer {
+  .etip-modalContainer .footer {
     flex: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
-  .modalContainer .footer button {
+  .etip-modalContainer .footer button {
     width: 150px;
     height: 45px;
     margin: 0px;
@@ -103,17 +104,19 @@
     padding: 0;
   }
   
-  .form-container {
+  .maifh-form-container {
     overflow: auto;
     width: 100%;
-    height: 100%;
+    height: 65%;
     margin: 0px auto;
-    padding: 15px;
+    padding: 5px;
+    padding-bottom: 0px;
     border:none;
     border-radius: 5px;
+    overflow-x: hidden;
   }
   
-  .form-container h2 {
+  .maifh-form-container h2 {
     text-align: center;
   }
   
@@ -127,17 +130,11 @@
     flex: 1;
     margin-right: 0px;
     margin-left: 5px;
-    
-    background-color: #fdfdff;
-    border-color: #e4e6fc;
   }
   
   .input-group label {
     display: block;
     margin-bottom: 5px;
-    
-    background-color: #fdfdff;
-    border-color: #e4e6fc;
   }
   
   .input-group select,
@@ -149,6 +146,10 @@
     border-radius: 5px;
   }
   
+  #cantidad{
+    text-align: center;
+  }
+
   .button-group {
     text-align: center;
     margin-top: 20px;
@@ -158,13 +159,20 @@
   .button-group button {
     width: 150px; /* Ancho fijo para todos los botones */
     padding: 10px 0; /* Ajusta el espaciado vertical si es necesario */
-    margin: 10px 10px;
+    margin: 10 10px;
     border: none;
     border-radius: 5px;
     background-color:  #49b3ee;
     color: #fff;
     cursor: pointer;
   }
+
+  /* width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; */
   
   .button-group button:hover {
     background-color: #3f18a5;

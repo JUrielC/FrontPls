@@ -1,27 +1,28 @@
 import DataTable from 'react-data-table-component'
 import { ApiUrl } from '../../services/apirest'
-import axios from 'axios'
-//import ToolTipForCells from '../TooltipForCells/ToolTipForCells';
 import { useEffect, useState } from 'react';
 import './InvHerramientas.css'
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
-import ModalContainer from '../ModalesInfoTabla/ModalContainer'
-import ModalInfoHerramienta from '../ModalesInfoTabla/ModalInfoHerramienta';
+import ModalInfoHerramienta from '../ModalesInfoTabla/ModalEditHerramienta';
+import ModalDelete from '../ModalDelete.jsx/ModalDelete';
 //import { response } from 'express';
 
 
 /* LA PROP CORRESPONDE A LOS VALORES QUE SE QUIEREN BUSCAR EN LA TABLA A TRAVÉS DEL CUADRO DE BUSQUEDA */
-const InvHerramientas = ({ filterSearch,  cboxFilterEstatus,setCboxFilterEstatus, cboxFilterOrigen, setCboxFilterOrigen, showInvHerramientas, setShowHerramientas }) => {
+const InvHerramientas = ({ filterSearch, cboxFilterEstatus, setCboxFilterEstatus, cboxFilterOrigen, setCboxFilterOrigen, showInvHerramientas, setShowHerramientas }) => {
 
     const [records, setRecords] = useState([])
     const [mostarInfo, setMostrarInfo] = useState(false)
-    const[dataRow, setDataRow] = useState(null)
+    const [dataRow, setDataRow] = useState(null)
+
+    const [showModalDelete, setShowModalDelete] = useState(false)
+
     let url = ApiUrl + "herramientas/"
 
 
     const { data, loading, error } = useGetWithAuth(url, setRecords)
 
-    useEffect(()=>{
+    useEffect(() => {
         if (loading || error || !data) {
             return;
         }
@@ -29,7 +30,7 @@ const InvHerramientas = ({ filterSearch,  cboxFilterEstatus,setCboxFilterEstatus
         setCboxFilterEstatus('')
         setCboxFilterOrigen('')
 
-    },[loading, error, data])
+    }, [loading, error, data])
 
     useEffect(() => {
         if (loading || error || !data) {
@@ -40,7 +41,7 @@ const InvHerramientas = ({ filterSearch,  cboxFilterEstatus,setCboxFilterEstatus
             item => {
                 const matchSearched = item.nombre_tipo && item.nombre_tipo.toLowerCase().includes(filterSearch.toLowerCase())
                 const matchFilterEstatus = cboxFilterEstatus === "" || item.nombre_estatus === cboxFilterEstatus /**/
-                const matchFilterOrigen = cboxFilterOrigen === "" ||( item.nombre_origen) === cboxFilterOrigen
+                const matchFilterOrigen = cboxFilterOrigen === "" || (item.nombre_origen) === cboxFilterOrigen
                 return matchSearched && matchFilterEstatus && matchFilterOrigen;
             }
 
@@ -98,31 +99,68 @@ const InvHerramientas = ({ filterSearch,  cboxFilterEstatus,setCboxFilterEstatus
             width: "10rem"
         },
         {
-          // Columna de botones
-          name: 'Acciones',
-          cell: row => (
-            <div className='invherr-button-group'>
-              {/* Botón de Editar */}
-              <button onClick={() =>{}}>Editar</button>
-              {/* Botón de Eliminar */}
-              <button onClick={() => {}}>Eliminar</button>
-            </div>
-          ),
-          ignoreRowClick: false, // No permitir hacer clic en la fila para esta columna
-          allowOverflow: true, // Permitir que los botones se desborden de la celda
-          button: true, // Indicar que los elementos son botones
+            // Columna de botones
+            name: 'Editar',
+            cell: row => (
+                <div className='invherr-button-group'>
+                    {/* Botón de Editar */}
+                    <button className='edit' tabIndex={-1} onClick={() => {
+                        setDataRow(row)
+                        setMostrarInfo(true)
+                    }}><i className="fas fa-edit"></i></button>
+                </div>
+            ),
+            fixed: true,
+            ignoreRowClick: false, // No permitir hacer clic en la fila para esta columna
+            width: '6rem'
+        },
+
+        {
+            // Columna de botones
+            name: 'Baja',
+            cell: row => (
+                <div className='invherr-button-group'>
+                    {/* Botón de Editar */}
+                    <button className='baja' tabIndex={-1} onClick={() => {
+                        setDataRow(row)
+                    }}> <i className="fas fa-times-circle"></i></button>
+                </div>
+            ),
+            fixed: true,
+            ignoreRowClick: false, // No permitir hacer clic en la fila para esta columna
+            width: '6rem'
+        },
+
+
+        {
+            // Columna de botones
+            name: 'Eliminar',
+            cell: row => (
+                <div className='invherr-button-group'>
+                    {/* Botón de Eliminar */}
+                    <button  className='eliminar' tabIndex={-1} onClick={() => {
+                        setDataRow(row)
+                        console.log(row)
+                        setShowModalDelete(true)
+                    }}> <i className="fas fa-trash"></i> </button>
+                </div>
+            ),
+            fixed: true,
+            ignoreRowClick: false, // No permitir hacer clic en la fila para esta columna
+            width: '6rem'
         },
     ]
- 
+
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
-    
+
 
     return (
         <> {mostarInfo &&
-            <ModalInfoHerramienta data = {dataRow} setMostrarInfo={setMostrarInfo} showInvHerramientas={showInvHerramientas} setShowHerramientas={setShowHerramientas}></ModalInfoHerramienta>} 
+            <ModalInfoHerramienta data={dataRow} setMostrarInfo={setMostrarInfo} showInvHerramientas={showInvHerramientas} setShowHerramientas={setShowHerramientas}></ModalInfoHerramienta>}
+            {showModalDelete && <ModalDelete  id_param={dataRow.id_herramienta} nombre_elemento={dataRow.nombre_tipo} showTabla={showInvHerramientas}  setShowTabla={setShowHerramientas} openThisModal={setShowModalDelete} rutaDelete={url}/>}
             <DataTable
                 columns={columns}
                 data={records}
@@ -133,8 +171,8 @@ const InvHerramientas = ({ filterSearch,  cboxFilterEstatus,setCboxFilterEstatus
                 selectableRows */
                 progressPending={loading}
                 paginationRowsPerPageOptions={[6, 8, 10, 15, 20, 25, 30]}
-                onRowClicked={(data) => { 
-                    console.log(data) 
+                onRowClicked={(data) => {
+                    console.log(data)
                     setDataRow(data)
                     setMostrarInfo(true)
                 }}  // Manejar clic en la fila

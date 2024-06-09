@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react';
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
 import ModalContainer from '../ModalesInfoTabla/ModalContainer'
+import './Usuarios.css'
 
 
 
@@ -12,6 +13,7 @@ const Usuarios = ({ filterSearch }) => {
     const [records, setRecords] = useState([])
     let url = ApiUrl + "usuarios"
 
+    const [dataRow, setDataRow] = useState(null)
 
     const { data, loading, error } = useGetWithAuth(url, setRecords)
 
@@ -72,7 +74,40 @@ const Usuarios = ({ filterSearch }) => {
             name: "Activo",
             selector: row => row.estatus_activo ? "Sí" : "No",
             sortable: true,
-        }   
+        }, 
+        {
+          // Columna de botones
+          name: 'Editar',
+          cell: row => (
+            <div className='invherr-user-button-group'>
+              {/* Botón de Editar */}
+              <button className='edit' tabIndex={-1} onClick={() =>{
+                //console.log (row)
+                setDataRow(row)
+                //  setOpenModalEdit(true)
+              }}><i className="fas fa-edit"></i></button>
+            </div>
+          ),
+          fixed: true,
+          ignoreRowClick: false, // No permitir hacer clic en la fila para esta columna
+         width: '6rem' 
+        },
+        {
+          // Columna de botones
+          name: 'Acciones',
+          cell: row => (
+            <div className='invherr-user-button-group'>
+              {/* Botón de Eliminar */}
+              <button className='eliminar' tabIndex={-1} onClick={() => {
+                setDataRow(row)
+                //setOpenModalDelete(true)
+              }}>{/* <i className="fas fa-trash"></i> */} {row.estatus_activo ? "Desactivar" : "Activar"}</button>
+            </div>
+          ),
+          fixed: true,
+          ignoreRowClick: false, // No permitir hacer clic en la fila para esta columna
+          width: '6rem'
+        },
     ]
 
 

@@ -1,21 +1,64 @@
-   
-  .invherr-button-group {
-    text-align: center;
-    margin-top: 20px;
-    box-sizing: border-box; 
-  }
-  
-  .invherr-button-group button {
-    width: 50px; /* Ancho fijo para todos los botones */
-    padding: 10px 0; /* Ajusta el espaciado vertical si es necesario */
-    margin: 10 10px;
-    border: none;
-    border-radius: 5px;
-    background-color:  #49b3ee;
-    color: #fff;
-    cursor: pointer;
-  }
+/* Botones generales */
+.invherr-button-group {
+  text-align: center;
+  margin-top: 0px;
+  box-sizing: border-box;
+}
 
-  .invherr-button-group button:hover {
-    background-color: #3f18a5;
-  }
+.invherr-button-group button {
+  width: 70px; /* Ancho fijo para todos los botones */
+  padding: 10px 1px; /* Ajusta el espaciado vertical si es necesario */
+  margin: 0px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px; /* Espacio entre icono y texto */
+}
+
+.invherr-button-group button:active {
+  transform: translateY(1px);
+}
+
+.invherr-button-group button:hover {
+  box-shadow: 0 0 7px rgb(8, 141, 202);
+}
+
+/* Botón Editar */
+.invherr-button-group .edit {
+  background-color: #49b3ee;
+}
+
+.invherr-button-group .edit:hover {
+  background-color: #3f18a5;
+}
+
+/* Botón Baja */
+.invherr-button-group .baja {
+  background-color: #1cac7c;
+}
+
+.invherr-button-group .baja:hover {
+  box-shadow: 0 0 7px rgb(14, 221, 118);
+}
+
+/* Botón Eliminar */
+.invherr-button-group .eliminar {
+  background-color: red;
+}
+
+.invherr-button-group .eliminar:hover {
+  box-shadow: 0 0 7px rgb(221, 14, 14);
+}
+
+/* Columna fija */
+.fixed-column {
+  position: sticky;
+  right: 0;
+  background: white;
+  z-index: 1;
+}

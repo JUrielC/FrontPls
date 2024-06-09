@@ -1,0 +1,66 @@
+/* Botones generales */
+.invherr-user-button-group {
+    text-align: center;
+    margin-top: 0px;
+    margin-right: 10px;
+    box-sizing: border-box;
+  }
+  
+  .invherr-user-button-group button {
+    width: 80px; /* Ancho fijo para todos los botones */
+    padding: 10px 1px; /* Ajusta el espaciado vertical si es necesario */
+    margin: 0px;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px; /* Espacio entre icono y texto */
+  }
+  
+  .invherr-user-button-group button:active {
+    transform: translateY(1px);
+  }
+  
+  .invherr-user-button-group button:hover {
+    box-shadow: 0 0 7px rgb(8, 141, 202);
+  }
+  
+  /* Botón Editar */
+  .invherr-user-button-group .edit {
+    background-color: #49b3ee;
+  }
+  
+  .invherr-user-button-group .edit:hover {
+    background-color: #3f18a5;
+  }
+  
+  /* Botón Baja */
+  .invherr-user-button-group .baja {
+    background-color: #1cac7c;
+  }
+  
+  .invherr-user-button-group .baja:hover {
+    box-shadow: 0 0 7px rgb(14, 221, 118);
+  }
+  
+  /* Botón Eliminar */
+  .invherr-user-button-group .eliminar {
+    background-color: #1cac7c;
+  }
+  
+  .invherr-user-button-group .eliminar:hover {
+    box-shadow: 0 0 7px rgb(17, 230, 176);
+  }
+  
+  /* Columna fija */
+  .fixed-column {
+    position: sticky;
+    right: 0;
+    background: white;
+    z-index: 1;
+  }
+  

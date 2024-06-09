@@ -9,10 +9,10 @@ const ModInfoPrestConcluido = ({ data, setOpenModalInf }) => {
             <div className="pconc-modalContainer">
                 <h4 id="pact-titulo">Detalles</h4>
                 <div className="row">
-                    <div className="pact-input-group">
+                    <div className="pconc-input-group"> 
                         <label htmlFor=""></label>
                         <label htmlFor=""></label>
-                        <label htmlFor=""></label>
+                        <label htmlFor=""></label> 
                     </div> 
                 </div>
                 <div className="pconc-input-group">

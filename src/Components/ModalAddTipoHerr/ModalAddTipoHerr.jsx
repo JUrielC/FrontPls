@@ -31,7 +31,7 @@ const ModalAddTipoHerr = ({ setOpenModalAddTipoHerr, showTiposHerramientas, setS
                 (e) => {
                   setForm((prevForm) => ({
                     ...prevForm,
-                    nombre_tipo: e.target.value
+                    nombre_tipo: e.target.value.trim()
                   }));
                 }
               } />
@@ -43,7 +43,7 @@ const ModalAddTipoHerr = ({ setOpenModalAddTipoHerr, showTiposHerramientas, setS
               (e) => {
                 setForm((prevForm) => ({
                   ...prevForm,
-                  descripcion: e.target.value
+                  descripcion: e.target.value.trim()
                 }));
               }
             }></textarea>

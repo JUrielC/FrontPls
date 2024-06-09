@@ -135,7 +135,16 @@ const PrestamosActivos = ({ filterSearch, showPrestActivos, setShowPrestActivos 
                         style: {
                             borderColor: 'red'
                         }
+                        
                     },
+                   /*  headCells: {
+                        style: {
+                          backgroundColor: '#49b3ee', // Cambia esto al color que desees
+                          color: 'white', // Cambia esto al color que desees
+                          fontSize: '16px',
+                          fontWeight: 'bold',
+                        },
+                      }, */
                 }}
             />
         </div>

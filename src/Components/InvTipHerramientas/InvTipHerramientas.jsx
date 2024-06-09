@@ -1,15 +1,20 @@
 import DataTable from 'react-data-table-component'
 import { ApiUrl } from '../../services/apirest'
-import axios from 'axios'
 //import ToolTipForCells from '../TooltipForCells/ToolTipForCells';
 import { useEffect, useState } from 'react';
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
-import ModalContainer from '../ModalesInfoTabla/ModalContainer'
-//import { response } from 'express';
+import ModalEditTipo from '../ModalesInfoTabla/ModalEditTipo';
+import ModalDelete from '../ModalDelete.jsx/ModalDelete';
+import './InvTipHerramienta.css'
 
 
 /* LA PROP CORRESPONDE A LOS VALORES QUE SE QUIEREN BUSCAR EN LA TABLA A TRAVÉS DEL CUADRO DE BUSQUEDA */
-const InvTipHerramientas = ({ filterSearch }) => {
+const InvTipHerramientas = ({ filterSearch, showTiposHerramientas, setShowTiposHerramientas }) => {
+
+    const [dataRow, setDataRow] = useState(null)
+
+    const [openModalEdit, setOpenModalEdit] = useState(false)
+    const [openModalDelete, setOpenModalDelete] = useState(false)
 
     const [records, setRecords] = useState([])
     let url = ApiUrl + "tipo_herramienta/"
@@ -29,7 +34,7 @@ const InvTipHerramientas = ({ filterSearch }) => {
                 return matchSearched 
             }
 
-        )
+        ) 
 
         setRecords(newFilteredData)
 
@@ -55,7 +60,40 @@ const InvTipHerramientas = ({ filterSearch }) => {
             name: "Descripción",
             selector: row => row.descripcion,
             sortable: true,
-        }
+        },
+        {
+          // Columna de botones
+          name: 'Editar',
+          cell: row => (
+            <div className='invherr-button-group'>
+              {/* Botón de Editar */}
+              <button className='edit' tabIndex={-1} onClick={() =>{
+                //console.log (row)
+                setDataRow(row)
+                setOpenModalEdit(true)
+              }}><i className="fas fa-edit"></i></button>
+            </div>
+          ),
+          fixed: true,
+          ignoreRowClick: false, // No permitir hacer clic en la fila para esta columna
+         width: '6rem' 
+        },
+        {
+          // Columna de botones
+          name: 'Eliminar',
+          cell: row => (
+            <div className='invherr-button-group'>
+              {/* Botón de Eliminar */}
+              <button className='eliminar' tabIndex={-1} onClick={() => {
+                setDataRow(row)
+                setOpenModalDelete(true)
+              }}><i className="fas fa-trash"></i> </button>
+            </div>
+          ),
+          fixed: true,
+          ignoreRowClick: false, // No permitir hacer clic en la fila para esta columna
+          width: '6rem'
+        },
     ]
 
 
@@ -67,6 +105,8 @@ const InvTipHerramientas = ({ filterSearch }) => {
     return (
         <>
             {/* <ModalContainer></ModalContainer> */}
+            {openModalEdit && <ModalEditTipo data={dataRow} openThisModal={setOpenModalEdit} showTable={showTiposHerramientas} setShowTable={setShowTiposHerramientas}></ModalEditTipo>}
+            {openModalDelete && <ModalDelete id_param={dataRow.id_tipo} nombre_elemento={dataRow.nombre_tipo} showTabla={showTiposHerramientas} setShowTabla={setShowTiposHerramientas} openThisModal={setOpenModalDelete} rutaDelete={url}></ModalDelete>}
             <DataTable
                 columns={columns}
                 data={records}
@@ -98,7 +138,14 @@ const InvTipHerramientas = ({ filterSearch }) => {
                         style: {
                             minHeight: '5.5vh'
                         }
-                    },
+                    },/* headCells: {
+                        style: {backgroundColor: '#1cac7c',
+                            color: '#333',
+                            
+                          fontSize: '16px',
+                          fontWeight: 'bold',
+                        },
+                      }, */
                 }}
             />
         </>
