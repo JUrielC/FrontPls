@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './LoginForm.css'
 import {     useState } from 'react';
 import {ApiUrl} from '../../services/apirest'
@@ -9,8 +9,15 @@ import { useNavigate } from 'react-router-dom';
 
 const LoginForm = ()=>{
 
-
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        if(localStorage.getItem('token-lab-sistemas')){
+            navigate('/inicio')
+            window.location.reload()
+        }
+    },[])
+
     const [form, setForm] = useState({
         nombre_login: '',
         password: ''
@@ -25,8 +32,8 @@ const LoginForm = ()=>{
         let url = ApiUrl + "login"
         axios.post(url, form)
         .then(response =>{
-            localStorage.setItem('token', response.data.tokenSession)
-            localStorage.setItem('user', response.data.user_data)
+            localStorage.setItem('token-lab-sistemas', response.data.tokenSession)
+            localStorage.setItem('user-lab-sistemas', response.data.user_data)
             navigate("/inicio")
             window.location.reload()
         })

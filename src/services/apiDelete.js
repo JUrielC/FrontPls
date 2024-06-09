@@ -3,7 +3,7 @@ import axios from 'axios';
 const eliminarDatos = async (url) => {
     try {
         // Obtener el token de autorización de localStorage
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token-lab-sistemas');
 
         // Realizar la solicitud con los headers adecuados
         const response = await axios.delete(url, {

@@ -7,3 +7,35 @@
 .if-form-group label {
     margin-right: 20px; /* Ajusta el espacio entre el label y el combo */
 }
+
+.inicio-button-group button {
+    width: 20vh; /* Ancho fijo para todos los botones */
+    height: 4vh;
+    padding: 10px 1px; /* Ajusta el espaciado vertical si es necesario */
+    margin: 0px;
+    border: transparent;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.1s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px; /* Espacio entre icono y texto */
+    background-color: #49b3ee;
+  }
+  
+  .inicio-button-group button:active {
+    transform: translateY(1px);
+    outline: none;
+  }
+  
+  .inicio-button-group button:hover {
+    box-shadow: 0 0 7px rgb(8, 141, 202);
+    background-color: #3f18a5;
+  }
+  .inicio-button-group button:focus {
+    border: 0 0 7px rgb(8, 141, 202);
+    outline: none;
+    
+  }

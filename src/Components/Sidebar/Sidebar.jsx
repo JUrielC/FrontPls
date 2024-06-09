@@ -3,19 +3,20 @@ import React from "react"
 const Sidebar = ({
     setShowPrestActivos, setShowPrestConcluidos, setShowListPrestamos, setShowHerramientas,
     setShowTiposHerramientas, setShowUsuarios, setShowSolicitantes,
-    setlabelTitleTable
+    setlabelTitleTable, setShowBajas
 }) => {
 
     /* FUNCIÓN PARA MOSTRAR SOLO UNO DE LOS COMPONENTES PRINCIPALES */
 
     function showComponent(setShowComponent) {
-   
+
         setShowPrestActivos(false)
         setShowPrestConcluidos(false)
         setShowListPrestamos(false)
 
         setShowHerramientas(false)
         setShowTiposHerramientas(false)
+        setShowBajas(false)
 
         setShowUsuarios(false)
         setShowSolicitantes(false)
@@ -24,7 +25,7 @@ const Sidebar = ({
 
         setTimeout(() => {
             setShowComponent(true);
-          }, 0);
+        }, 0);
     }
 
     return (
@@ -58,32 +59,32 @@ const Sidebar = ({
                     <li className="dropdown">
                         <a href="#" className="nav-link has-dropdown">
                             <i className="fas fa-exchange-alt" /* style={{ fontSize: '150%' }} */>
-                                
+
                             </i>
                             <span>Préstamos</span>
                         </a>
                         <ul className="dropdown-menu">
-                            <li><a className="nav-link" href="" 
-                                    onClick={(e)=>{
-                                        e.preventDefault(); 
-                                        showComponent(setShowPrestActivos);
-                                        setlabelTitleTable('Préstamos Pendientes')
-                                    }}>
+                            <li><a className="nav-link" href=""
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    showComponent(setShowPrestActivos);
+                                    setlabelTitleTable('Préstamos Pendientes')
+                                }}>
                                 Préstamos activos</a>
                             </li>
 
-                            <li><a className="nav-link" href="" 
-                                    onClick={ (e) => {
-                                        e.preventDefault();
-                                        showComponent(setShowPrestConcluidos)
-                                        setlabelTitleTable('Préstamos Concluidos')
-                                        }}>
-                                    Préstamos concluidos</a>
+                            <li><a className="nav-link" href=""
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    showComponent(setShowPrestConcluidos)
+                                    setlabelTitleTable('Préstamos Concluidos')
+                                }}>
+                                Préstamos concluidos</a>
                             </li>
 
                             <li>
                                 <a className="nav-link" href="" onClick={
-                                    (e)=>{
+                                    (e) => {
                                         e.preventDefault();
                                         showComponent(setShowListPrestamos)
                                         setlabelTitleTable('Lista de Préstamos')
@@ -103,8 +104,8 @@ const Sidebar = ({
                             <span>Inventario</span>
                         </a>
                         <ul className="dropdown-menu">
-                            <li><a className="nav-link" href="" 
-                                onClick={(e)=>{
+                            <li><a className="nav-link" href=""
+                                onClick={(e) => {
 
                                     e.preventDefault();
                                     showComponent(setShowHerramientas)
@@ -120,6 +121,15 @@ const Sidebar = ({
                                     setlabelTitleTable('Tipos de Herramientas')
                                 }
                             }>Tipos de herramientas</a></li>
+
+                            <li><a className="nav-link" href="" onClick={
+                                (e) => {
+                                    e.preventDefault();
+                                    showComponent(setShowBajas)
+                                    setlabelTitleTable('Bajas')
+                                }
+                            }>Bajas</a></li>
+
                         </ul>
                     </li>
                     <li className="menu-header">Administración</li>
@@ -130,7 +140,7 @@ const Sidebar = ({
                         </a>
                         <ul className="dropdown-menu">
                             <li><a /* className="nav-link" */ href="" onClick={
-                                (e)=>{
+                                (e) => {
                                     e.preventDefault();
                                     showComponent(setShowUsuarios)
                                     setlabelTitleTable('Usuarios')

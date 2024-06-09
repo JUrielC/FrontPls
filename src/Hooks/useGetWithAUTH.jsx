@@ -11,10 +11,13 @@ const useGetWithAuth = (url, setRecords) => {
     const navigate = useNavigate();
     useEffect(() => {
         const fetchData = async () => {
+            if(!localStorage.getItem('token-lab-sistemas')){
+                navigate('/login')
+            }
             try {
                 const response = await axios.get(url, {
                     headers: {
-                        'Authorization': localStorage.getItem('token')
+                        'Authorization': localStorage.getItem('token-lab-sistemas')
                     }
                 });
                 setData(response.data);

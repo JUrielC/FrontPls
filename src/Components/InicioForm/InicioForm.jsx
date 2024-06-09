@@ -4,6 +4,7 @@ import PrestamosActivos from '../PrestamosActivos/PrestamosActivos'
 import PrestamosConcluidos from '../PrestamosConcluidos/PrestamosConcluidos';
 import InvHerramientas from '../InvHerramientas/InvHerramientas';
 import InvTipHerramientas from '../InvTipHerramientas/InvTipHerramientas';
+import Bajas from '../Bajas/Bajas';
 import ListaPrestamos from '../ListaPrestamos/ListaPrestamos';
 import Usuarios from '../Usuarios/Usuarios';
 import Solicitantes from '../Solicitantes/Solicitantes';
@@ -36,6 +37,7 @@ const InicioForm = () => {
     //Inventario
     const [showInvHerramientas, setShowHerramientas] = useState(false)
     const [showTiposHerramientas, setShowTiposHerramientas] = useState(false)
+    const [showBajas, setShowBajas] = useState(false)
 
     //Usuarios
     const [showUsuarios, setShowUsuarios] = useState(false)
@@ -44,7 +46,7 @@ const InicioForm = () => {
 
 
     /* FUNCIÓN PARA TOMAR DATOS DEL USER  */
-    const userData = localStorage.getItem('user')
+    const userData = localStorage.getItem('user-lab-sistemas')
 
     /* TITULO DEL CONTENEDOR DE LA TABLA */
     const [labelTitleTable, setlabelTitleTable] = useState('Prestamos Pendientes')
@@ -70,7 +72,7 @@ const InicioForm = () => {
 
     const navigate = useNavigate()
     useEffect(() => {
-        if(!localStorage.getItem('token')){
+        if(!localStorage.getItem('token-lab-sistemas')){
             navigate('/login')
         }
     }, [])
@@ -121,6 +123,7 @@ const InicioForm = () => {
                             setShowListPrestamos={setShowListPrestamos}
                             setShowHerramientas={setShowHerramientas}
                             setShowTiposHerramientas={setShowTiposHerramientas}
+                            setShowBajas={setShowBajas}
                             setShowUsuarios={setShowUsuarios}
                             setShowSolicitantes={setShowSolicitantes}
                             setlabelTitleTable={setlabelTitleTable}
@@ -159,6 +162,11 @@ const InicioForm = () => {
 
                                                 </>
                                             }
+                                            {showBajas &&  
+                                            <div className='inicio-button-group'>
+                                             <button className='inicio-button-group'> Borrar historial</button>
+                                                </div>
+                                             }
                                         </div>
 
                                         {/*  <p>
@@ -188,6 +196,7 @@ const InicioForm = () => {
                                         {showTiposHerramientas && <InvTipHerramientas filterSearch={valueSearch} showTiposHerramientas = {showTiposHerramientas} setShowTiposHerramientas={setShowTiposHerramientas}/>}
                                         {showUsuarios && <Usuarios filterSearch={valueSearch} showUsuarios={showUsuarios} setShowUsuarios={setShowUsuarios}/> }
                                         {showSolicitantes && <Solicitantes filterSearch={valueSearch}/>}
+                                        {showBajas && <Bajas filterSearch={valueSearch} showBajas={showBajas} setShowBajas={setShowBajas} />}
                                     </div>
                                 </div>
                                 {/* </div> */}

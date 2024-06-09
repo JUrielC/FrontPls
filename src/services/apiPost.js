@@ -5,7 +5,7 @@ const enviarDatos = async (url, data) => {
     try {
         const response = await axios.post(url, data, {
             headers: {
-                Authorization: localStorage.getItem('token')
+                Authorization: localStorage.getItem('token-lab-sistemas')
             }
         });
         return response.data.message.messageText;

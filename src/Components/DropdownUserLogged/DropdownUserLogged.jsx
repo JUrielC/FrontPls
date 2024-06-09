@@ -1,7 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const DropdownUserLogged = ({userData}) => {
-
+    
+    const navigate = useNavigate()
     return(
         <li className="dropdown">
         <a href="#" data-toggle="dropdown" className="nav-link dropdown-toggle nav-link-lg nav-link-user">
@@ -10,18 +12,17 @@ const DropdownUserLogged = ({userData}) => {
 
         </a>
         <div className="dropdown-menu dropdown-menu-right">
-            <div className="dropdown-title">Logged in 5 min ago</div>
-            <a href="features-profile.html" className="dropdown-item has-icon">
-                <i className="far fa-user"></i> Profile
-            </a>
-            <a href="features-activities.html" className="dropdown-item has-icon">
-                <i className="fas fa-bolt"></i> Activities
-            </a>
-            <a href="features-settings.html" className="dropdown-item has-icon">
-                <i className="fas fa-cog"></i> Settings
-            </a>
+           
+            
+    
             <div className="dropdown-divider"></div>
-            <a href="#" className="dropdown-item has-icon text-danger">
+            <a href="#" className="dropdown-item has-icon text-danger" onClick={
+                (e)=>{
+                    e.preventDefault()
+                    localStorage.clear()
+                    navigate('/login')
+                }
+            }>
                 <i className="fas fa-sign-out-alt"></i> Logout
             </a>
         </div>

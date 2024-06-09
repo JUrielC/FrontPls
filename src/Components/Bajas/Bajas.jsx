@@ -5,11 +5,11 @@ import { useEffect, useState } from 'react';
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
 import ModalEditTipo from '../ModalesInfoTabla/ModalEditTipo';
 import ModalDelete from '../ModalDelete.jsx/ModalDelete';
-import './InvTipHerramienta.css'
+import '../InvTipHerramientas/InvTipHerramienta.css'
 
 
 /* LA PROP CORRESPONDE A LOS VALORES QUE SE QUIEREN BUSCAR EN LA TABLA A TRAVÉS DEL CUADRO DE BUSQUEDA */
-const InvTipHerramientas = ({ filterSearch, showTiposHerramientas, setShowTiposHerramientas }) => {
+const Bajas = ({ filterSearch, showBajas, setShowBajas }) => {
 
     const [dataRow, setDataRow] = useState(null)
 
@@ -17,7 +17,7 @@ const InvTipHerramientas = ({ filterSearch, showTiposHerramientas, setShowTiposH
     const [openModalDelete, setOpenModalDelete] = useState(false)
 
     const [records, setRecords] = useState([])
-    let url = ApiUrl + "tipo_herramienta/"
+    let url = ApiUrl + "bajas/"
 
 
     const { data, loading, error } = useGetWithAuth(url, setRecords)
@@ -31,10 +31,10 @@ const InvTipHerramientas = ({ filterSearch, showTiposHerramientas, setShowTiposH
         const newFilteredData = data.filter(
             item => {
                 const matchSearched = item.nombre_tipo && item.nombre_tipo.toLowerCase().includes(filterSearch.toLowerCase())
-                return matchSearched 
+                return matchSearched
             }
 
-        ) 
+        )
 
         setRecords(newFilteredData)
 
@@ -47,52 +47,55 @@ const InvTipHerramientas = ({ filterSearch, showTiposHerramientas, setShowTiposH
     const columns = [
         {
             name: "ID",
-            selector: row => row.id_tipo,
+            selector: row => row.id_baja,
             sortable: true
         },
         {
-            name: "Tipo",
-            selector: row => row.nombre_tipo,
+            name: "ID Herramienta",
+            selector: row => row.id_herramienta,
             sortable: true,
 
+        },
+        {
+            name: "Nombre",
+            selector: row => row.nombre_tipo,
+            sortable: true,
         }, 
         {
-            name: "Descripción",
-            selector: row => row.descripcion,
+            name: "Motivo",
+            selector: row => row.nombre_motivo,
+            sortable: true,
+        }, 
+        {
+            name: "Fecha",
+            selector: row => row.fecha_baja,
+            sortable: true,
+        }, 
+        {
+            name: "Usuario",
+            selector: row => row.usuario, 
+            sortable: true,
+        }, 
+        {
+            name: "Observaciones",
+            selector: row => row.observaciones ? row.observaciones : "",
             sortable: true,
         },
         {
-          // Columna de botones
-          name: 'Editar',
-          cell: row => (
-            <div className='invherr-button-group'>
-              {/* Botón de Editar */}
-              <button className='edit' tabIndex={-1} onClick={() =>{
-                //console.log (row)
-                setDataRow(row)
-                setOpenModalEdit(true)
-              }}><i className="fas fa-edit"></i></button>
-            </div>
-          ),
-          fixed: true,
-          ignoreRowClick: false, // No permitir hacer clic en la fila para esta columna
-         width: '6rem' 
-        },
-        {
-        
-          name: 'Eliminar',
-          cell: row => (
-            <div className='invherr-button-group'>
-              
-              <button className='eliminar' tabIndex={-1} onClick={() => {
-                setDataRow(row)
-                setOpenModalDelete(true)
-              }}><i className="fas fa-trash"></i> </button>
-            </div>
-          ),
-          fixed: true,
-          ignoreRowClick: false, 
-          width: '6rem'
+            // Columna de botones
+            name: 'Eliminar',
+            cell: row => (
+                <div className='invherr-button-group'>
+                    {/* Botón de Eliminar */}
+                    <button className='eliminar' tabIndex={-1} onClick={() => {
+                        setDataRow(row)
+                        setOpenModalDelete(true)
+                    }}><i className="fas fa-trash"></i> </button>
+                </div>
+            ),
+            fixed: true,
+            ignoreRowClick: false, // No permitir hacer clic en la fila para esta columna
+            width: '6rem'
         },
     ]
 
@@ -100,13 +103,13 @@ const InvTipHerramientas = ({ filterSearch, showTiposHerramientas, setShowTiposH
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
-    
+
 
     return (
         <>
             {/* <ModalContainer></ModalContainer> */}
-            {openModalEdit && <ModalEditTipo data={dataRow} openThisModal={setOpenModalEdit} showTable={showTiposHerramientas} setShowTable={setShowTiposHerramientas}></ModalEditTipo>}
-            {openModalDelete && <ModalDelete id_param={dataRow.id_tipo} nombre_elemento={dataRow.nombre_tipo} showTabla={showTiposHerramientas} setShowTabla={setShowTiposHerramientas} openThisModal={setOpenModalDelete} rutaDelete={url}></ModalDelete>}
+            
+            {openModalDelete && <ModalDelete id_param={dataRow.id_baja} nombre_elemento={dataRow.nombre_tipo} showTabla={showBajas} setShowTabla={setShowBajas} openThisModal={setOpenModalDelete} rutaDelete={url}></ModalDelete>}
             <DataTable
                 columns={columns}
                 data={records}
@@ -155,4 +158,4 @@ const InvTipHerramientas = ({ filterSearch, showTiposHerramientas, setShowTiposH
 
 }
 
-export default InvTipHerramientas;
+export default Bajas;

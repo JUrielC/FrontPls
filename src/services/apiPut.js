@@ -5,7 +5,7 @@ const actualizarDatos = async (url, data) => {
     try {
         const response = await axios.put(url, data, {
             headers: {
-                Authorization: localStorage.getItem('token')
+                Authorization: localStorage.getItem('token-lab-sistemas')
             }
         });
         return response.data.message.messageText;

@@ -132,12 +132,11 @@ const InvHerramientas = ({ filterSearch, cboxFilterEstatus, setCboxFilterEstatus
         },
 
 
-        {
-            // Columna de botones
+     /*    {
+            
             name: 'Eliminar',
             cell: row => (
                 <div className='invherr-button-group'>
-                    {/* Botón de Eliminar */}
                     <button  className='eliminar' tabIndex={-1} onClick={() => {
                         setDataRow(row)
                         console.log(row)
@@ -146,9 +145,9 @@ const InvHerramientas = ({ filterSearch, cboxFilterEstatus, setCboxFilterEstatus
                 </div>
             ),
             fixed: true,
-            ignoreRowClick: false, // No permitir hacer clic en la fila para esta columna
+            ignoreRowClick: false, 
             width: '6rem'
-        },
+        }, */
     ]
 
 
