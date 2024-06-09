@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+.mrb-modalBackground {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(200, 200, 200, 0.5);
+  /* Asegúrate de que el fondo sea semi-transparente */
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  z-index: 1000;
+  /* Ajusta este valor si es necesario */ 
+  margin-left: 20px; /* Ajusta este valor según tus necesidades */
+}
+
+#mdel-titulo {
+  text-align: center;
+}
+
+.mrb-modalContainer {
+  width: 120vh;
+  height: 50vh;
+  /**/  border-radius: 12px; 
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding-left: 50px;
+  padding-right: 50px;
+  position: relative;
+  z-index: 1001;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* 
+   width: 80%;
+  max-width: 600px; 
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  */
+
+.mrb-modalContainer .title {
+  display: -block;
+  text-align: start;
+  margin-top: 10px;
+}
+
+.titleCloseBtn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.titleCloseBtn button {
+  background-color: transparent;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.mrb-modalContainer .body {
+  flex: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  text-align: center;
+}
+
+.mrb-modalContainer .footer {
+  flex: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mrb-modalContainer .footer button {
+  width: 150px;
+  height: 45px;
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: cornflowerblue;
+  color: white;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#cancelBtn {
+  background-color: crimson;
+}
+
+
+
+
+
+
+
+
+
+.body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.form-container {
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  margin: 0px auto;
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+}
+
+.form-container h2 {
+  text-align: center;
+}
+
+.pact-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 0px;
+}
+
+.mdel-input-group {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 16px;
+  /* Ajusta el espacio entre los elementos según sea necesario */
+  margin-right: 0px;
+  margin-left: 5px;
+  background-color: #fdfdff;
+  border-color: #e4e6fc;
+}
+
+.mdel-input-group label {
+  flex: 1;
+  margin-right: 0px;
+  margin-left: 5px;
+  display: block;
+  margin-bottom: 5px;
+  font-size: large;
+  background-color: #fdfdff;
+  border-color: #e4e6fc;
+  font-weight: bold;
+  font-size: medium;
+}
+
+.mdel-input-group label span {
+  flex: 1;
+  margin-right: 0px;
+  margin-left: 1px;
+  display: block;
+  margin-bottom: 0px;
+  font-size: large;
+  background-color: #fdfdff;
+  border-color: #e4e6fc;
+  font-weight: 400;
+  font-size: medium;
+}
+
+.mdel-input-group select,
+.mdel-input-group input,
+.mdel-input-group textarea {
+  width: 100%;
+  padding: 0px 0px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#pact-observaciones {
+  grid-column: span 2;
+}
+
+.button-group {
+  text-align: center;
+  margin-top: 20px;
+  box-sizing: border-box;
+}
+
+.button-group button {
+  width: 150px;
+  /* Ancho fijo para todos los botones */
+  padding: 10px 0;
+  /* Ajusta el espaciado vertical si es necesario */
+  margin: 10px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #49b3ee;
+  color: #fff;
+  cursor: pointer;
+}
+
+.button-group button:hover {
+  background-color: #3f18a5;
+}

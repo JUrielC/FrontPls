@@ -109,7 +109,7 @@ const Bajas = ({ filterSearch, showBajas, setShowBajas }) => {
         <>
             {/* <ModalContainer></ModalContainer> */}
             
-            {openModalDelete && <ModalDelete id_param={dataRow.id_baja} nombre_elemento={dataRow.nombre_tipo} showTabla={showBajas} setShowTabla={setShowBajas} openThisModal={setOpenModalDelete} rutaDelete={url}></ModalDelete>}
+            {openModalDelete && <ModalDelete style = {{overflow: 'hidden'}} id_param={dataRow.id_baja} nombre_elemento={dataRow.nombre_tipo} showTabla={showBajas} setShowTabla={setShowBajas} openThisModal={setOpenModalDelete} rutaDelete={url}></ModalDelete>}
             <DataTable
                 columns={columns}
                 data={records}

@@ -16,7 +16,10 @@ import ModalAddTipoHerr from '../ModalAddTipoHerr/ModalAddTipoHerr';
 import ModalAddUser from '../ModalAddUser/ModalAddUser';
 import Sidebar from '../Sidebar/Sidebar';
 import CboxFilter from '../CboxFilter/CboxFilter';
+import ModalDelete from '../ModalDelete.jsx/ModalDelete';
+import { ApiUrl } from '../../services/apirest';
 import ModalResponse from '../ModalResponse/ModalResponse';
+import '../InvTipHerramientas/InvTipHerramienta.css'
 import './InicioForm.css'
 
 
@@ -38,10 +41,13 @@ const InicioForm = () => {
     const [showInvHerramientas, setShowHerramientas] = useState(false)
     const [showTiposHerramientas, setShowTiposHerramientas] = useState(false)
     const [showBajas, setShowBajas] = useState(false)
+    //mostrar modal de borrar historial de bajas
+    const [showModalDelBajas, setShowModalDelBajas] = useState(false)
 
     //Usuarios
     const [showUsuarios, setShowUsuarios] = useState(false)
     const [showSolicitantes, setShowSolicitantes] = useState(false)
+
 
 
 
@@ -80,7 +86,13 @@ const InicioForm = () => {
 
 
     return (
-        <>
+        <>  
+        {showBajas && showModalDelBajas && 
+             <ModalDelete id_param={""} nombre_elemento={"Historial de bajas"} 
+             showTabla={showBajas} setShowTabla={setShowBajas} openThisModal={setShowModalDelBajas}
+             rutaDelete={ApiUrl + "bajas/clear_bajas/all"}
+             ></ModalDelete>
+             }
             <div>
                 <div id="app">
                     <div className="main-wrapper main-wrapper-1">
@@ -164,9 +176,14 @@ const InicioForm = () => {
                                             }
                                             {showBajas &&  
                                             <div className='inicio-button-group'>
-                                             <button className='inicio-button-group'> Borrar historial</button>
+                                             <button className='inicio-button-group'onClick={
+                                                ()=>{
+                                                    setShowModalDelBajas(true)
+                                                }
+                                             }> Borrar historial</button>
                                                 </div>
                                              }
+
                                         </div>
 
                                         {/*  <p>

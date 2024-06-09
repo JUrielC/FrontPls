@@ -25,7 +25,7 @@ const ModalDelete = ({ id_param, nombre_elemento, showTabla, setShowTabla, openT
                         </div>
                      
                     <div className="mdel-input-group">
-                      {showOptions && <>  <label htmlFor="">¿Eliminar el siguiente elmento?
+                      {showOptions && <>  <label htmlFor="">¿Eliminar el siguiente elemento?
                             <span>
                                 Nombre: {nombre_elemento}
                             </span>
@@ -41,6 +41,7 @@ const ModalDelete = ({ id_param, nombre_elemento, showTabla, setShowTabla, openT
                         { showOptions &&  
                         <button type="button" id="eliminar-btn" onClick={
                             async () => {
+                                //console.log (rutaDelete)
                                 const ruta = rutaDelete + id_param
                                 const response = await eliminarDatos(ruta)
                                 if (response.ok) {
