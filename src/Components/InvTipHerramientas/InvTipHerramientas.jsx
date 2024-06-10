@@ -113,10 +113,10 @@ const InvTipHerramientas = ({ filterSearch, showTiposHerramientas, setShowTiposH
                 pagination={true}
                 fixedHeader={true}
                 persistTableHead={true}
-                paginationPerPage={8}/* 
+                paginationPerPage={9}/* 
                 selectableRows */
                 progressPending={loading}
-                paginationRowsPerPageOptions={[6, 8, 10, 15, 20, 25, 30]}
+                paginationRowsPerPageOptions={[7, 9, 11, 15, 20, 25, 30]}
                 onRowClicked={(data) => { console.log(data.id_herramienta) }}  // Manejar clic en la fila
                 highlightOnHover  // Resaltar la fila al pasar el ratón por encima
                 pointerOnHover    // Mostrar puntero al pasar el ratón por encima

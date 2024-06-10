@@ -121,10 +121,10 @@ const ListaPrestamos = ({filterSearch}) => {
                 fixedHeader={true}
                 pagination
                 persistTableHead={true}
-                paginationPerPage={8}/* 
+                paginationPerPage={9}/* 
                 selectableRows */
                 progressPending={loading}
-                paginationRowsPerPageOptions={[6, 8, 10, 15, 20, 25, 30]}
+                paginationRowsPerPageOptions={[7, 9, 11, 15, 20, 25, 30]}
                 onRowClicked={(data) => { 
                     //console.log(data)
                     setDataRow(data)

@@ -52,7 +52,7 @@ const Sidebar = ({
                     </div>
                 </div>
                 <div className="sidebar-brand sidebar-brand-sm">
-                    <a href="">LS</a>
+                    <a href="#">LS</a>
                 </div>
                 <ul className="sidebar-menu">
                     <li className="menu-header">Laboratorio</li>

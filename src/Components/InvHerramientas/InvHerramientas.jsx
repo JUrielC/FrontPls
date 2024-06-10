@@ -5,6 +5,7 @@ import './InvHerramientas.css'
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
 import ModalEditHerramienta from '../ModalesInfoTabla/ModalEditHerramienta';
 import ModalRegistrarBaja from '../ModalRegistrarBaja/ModalRegistrarBaja';
+import ModInfoTablaGeneric from '../ModalesInfoTabla/ModalInfoTablaGeneric';
 
 //import { response } from 'express';
 
@@ -15,6 +16,7 @@ const InvHerramientas = ({ filterSearch, cboxFilterEstatus, setCboxFilterEstatus
     const [records, setRecords] = useState([])
     const [mostrarEditar, SetMostrarEditar] = useState(false)
     const [dataRow, setDataRow] = useState(null)
+    const [openModalInfo, setOpenModalInfo] = useState(false)
 
     const [showModalBaja, setShowModalBaja] = useState(false)
 
@@ -91,6 +93,7 @@ const InvHerramientas = ({ filterSearch, cboxFilterEstatus, setCboxFilterEstatus
             name: "Observaciones",
             selector: row => row.observaciones,
             sortable: true,
+            width: "10rem"
 
         },
         {
@@ -134,23 +137,17 @@ const InvHerramientas = ({ filterSearch, cboxFilterEstatus, setCboxFilterEstatus
         },
 
 
-        /*    {
-               
-               name: 'Eliminar',
-               cell: row => (
-                   <div className='invherr-button-group'>
-                       <button  className='eliminar' tabIndex={-1} onClick={() => {
-                           setDataRow(row)
-                           console.log(row)
-                           setShowModalDelete(true)
-                       }}> <i className="fas fa-trash"></i> </button>
-                   </div>
-               ),
-               fixed: true,
-               ignoreRowClick: false, 
-               width: '6rem'
-           }, */
     ]
+
+    const titles = {
+        id_herramienta: "ID",
+        nombre_tipo: "Tipo",
+        nombre_estatus: "Estatus",
+        nombre_origen: "Origen",
+        fecha_alta: "Fecha de alta",
+        usuario: "Usuario",
+        observaciones: "Observaciones"
+    }
 
 
     if (loading) return <p>Loading...</p>;
@@ -160,6 +157,7 @@ const InvHerramientas = ({ filterSearch, cboxFilterEstatus, setCboxFilterEstatus
 
     return (
         <>
+        {openModalInfo && <ModInfoTablaGeneric data={dataRow} titles={titles} setOpenModalInf={setOpenModalInfo}></ModInfoTablaGeneric>}
         { showModalBaja && <ModalRegistrarBaja openThisModal={setShowModalBaja} id_elemento={dataRow.id_herramienta} 
         nombre_elemento={dataRow.nombre_tipo} showTabla={showInvHerramientas} setShowTabla={setShowHerramientas} ruta={ApiUrl + "bajas/"}></ModalRegistrarBaja>}
 
@@ -172,14 +170,13 @@ const InvHerramientas = ({ filterSearch, cboxFilterEstatus, setCboxFilterEstatus
                 pagination={true}
                 fixedHeader={true}
                 persistTableHead={true}
-                paginationPerPage={8}/* 
+                paginationPerPage={9}/* 
                 selectableRows */
                 progressPending={loading}
-                paginationRowsPerPageOptions={[6, 8, 10, 15, 20, 25, 30]}
+                paginationRowsPerPageOptions={[7, 9, 11, 15, 20, 25, 30]}
                 onRowClicked={(data) => {
-                    /*  console.log(data)
                      setDataRow(data)
-                     SetMostrarEditar(true) */
+                     setOpenModalInfo(true)
                 }}  // Manejar clic en la fila
                 highlightOnHover  // Resaltar la fila al pasar el ratón por encima
                 pointerOnHover    // Mostrar puntero al pasar el ratón por encima

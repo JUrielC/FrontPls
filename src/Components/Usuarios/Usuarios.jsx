@@ -1,9 +1,7 @@
 import DataTable from 'react-data-table-component'
 import { ApiUrl } from '../../services/apirest'
-import axios from 'axios'
 import { useEffect, useState } from 'react';
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
-import ModalContainer from '../ModalesInfoTabla/ModalContainer'
 import actualizarDatos from '../../services/apiPut';
 import ModalEditUsuario from '../ModalesInfoTabla/ModalEditUsuario';
 import ModalResetPass from '../ModalResetPass/ModalResetPass';
@@ -132,7 +130,7 @@ const Usuarios = ({ filterSearch, showUsuarios, setShowUsuarios }) => {
                  setDataRow(row)
                  setOpenModalResetPass(true)
   
-                }}><i class="fas fa-key"></i></button>
+                }}><i className="fas fa-key"></i></button>
               </div>
             ),
             fixed: true,

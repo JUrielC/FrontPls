@@ -122,10 +122,10 @@ const PrestamosConcluidos = ({filterSearch}) => {
                 data={records}
                 pagination
                 persistTableHead={true}
-                paginationPerPage={8}/* 
+                paginationPerPage={9}/* 
                 selectableRows */
                 progressPending={loading}
-                paginationRowsPerPageOptions={[7, 8, 10, 15, 20, 25, 30]}
+                paginationRowsPerPageOptions={[7, 9, 11, 15, 20, 25, 30]}
                 onRowClicked={(data) => { 
                     //console.log(data)
                     setDataRow(data)

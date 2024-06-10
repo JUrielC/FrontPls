@@ -1,9 +1,7 @@
 import DataTable from 'react-data-table-component'
 import { ApiUrl } from '../../services/apirest'
-//import ToolTipForCells from '../TooltipForCells/ToolTipForCells';
 import { useEffect, useState } from 'react';
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
-import ModalEditTipo from '../ModalesInfoTabla/ModalEditTipo';
 import ModalDelete from '../ModalDelete.jsx/ModalDelete';
 import '../InvTipHerramientas/InvTipHerramienta.css'
 
@@ -13,7 +11,6 @@ const Bajas = ({ filterSearch, showBajas, setShowBajas }) => {
 
     const [dataRow, setDataRow] = useState(null)
 
-    const [openModalEdit, setOpenModalEdit] = useState(false)
     const [openModalDelete, setOpenModalDelete] = useState(false)
 
     const [records, setRecords] = useState([])
@@ -116,10 +113,10 @@ const Bajas = ({ filterSearch, showBajas, setShowBajas }) => {
                 pagination={true}
                 fixedHeader={true}
                 persistTableHead={true}
-                paginationPerPage={8}/* 
+                paginationPerPage={9}/* 
                 selectableRows */
                 progressPending={loading}
-                paginationRowsPerPageOptions={[6, 8, 10, 15, 20, 25, 30]}
+                paginationRowsPerPageOptions={[7, 9, 11, 15, 20, 25, 30]}
                 onRowClicked={(data) => { console.log(data.id_herramienta) }}  // Manejar clic en la fila
                 highlightOnHover  // Resaltar la fila al pasar el ratón por encima
                 pointerOnHover    // Mostrar puntero al pasar el ratón por encima

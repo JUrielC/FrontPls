@@ -29,6 +29,8 @@
   display: flex;
   flex-direction: column;
   padding: 5px;
+  padding-left: 20px;
+  padding-right: 20px;
   position: relative;
   z-index: 1001;
   overflow-y: auto;
@@ -132,7 +134,7 @@
 
 .pact-input-group {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
   /* Ajusta el espacio entre los elementos según sea necesario */
   margin-right: 0px;
@@ -177,7 +179,7 @@
 }
 
 #pact-observaciones {
-  grid-column: span 2;
+  grid-column: span 3;
 }
 
 .button-group {

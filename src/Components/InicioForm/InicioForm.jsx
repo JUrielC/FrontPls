@@ -18,7 +18,6 @@ import Sidebar from '../Sidebar/Sidebar';
 import CboxFilter from '../CboxFilter/CboxFilter';
 import ModalDelete from '../ModalDelete.jsx/ModalDelete';
 import { ApiUrl } from '../../services/apirest';
-import ModalResponse from '../ModalResponse/ModalResponse';
 import '../InvTipHerramientas/InvTipHerramienta.css'
 import './InicioForm.css'
 
