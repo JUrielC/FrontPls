@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
 import ModalEditTipo from '../ModalesInfoTabla/ModalEditTipo';
 import ModalDelete from '../ModalDelete.jsx/ModalDelete';
+import ModInfoTablaGeneric from '../ModalesInfoTabla/ModalInfoTablaGeneric';
 import './InvTipHerramienta.css'
 
 
@@ -15,6 +16,8 @@ const InvTipHerramientas = ({ filterSearch, showTiposHerramientas, setShowTiposH
 
     const [openModalEdit, setOpenModalEdit] = useState(false)
     const [openModalDelete, setOpenModalDelete] = useState(false)
+
+    const [showInfo, setShowInfo] = useState(false)
 
     const [records, setRecords] = useState([])
     let url = ApiUrl + "tipo_herramienta/"
@@ -97,6 +100,11 @@ const InvTipHerramientas = ({ filterSearch, showTiposHerramientas, setShowTiposH
     ]
 
 
+    const titles = {
+        id_tipo: "ID",
+        nombre_tipo: "Nombre",
+        descripcion: "Descripción"
+    }
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
@@ -104,6 +112,7 @@ const InvTipHerramientas = ({ filterSearch, showTiposHerramientas, setShowTiposH
 
     return (
         <>
+            {showInfo && <ModInfoTablaGeneric data ={dataRow} titles={titles} setOpenModalInf={setShowInfo} />}
             {/* <ModalContainer></ModalContainer> */}
             {openModalEdit && <ModalEditTipo data={dataRow} openThisModal={setOpenModalEdit} showTable={showTiposHerramientas} setShowTable={setShowTiposHerramientas}></ModalEditTipo>}
             {openModalDelete && <ModalDelete id_param={dataRow.id_tipo} nombre_elemento={dataRow.nombre_tipo} showTabla={showTiposHerramientas} setShowTabla={setShowTiposHerramientas} openThisModal={setOpenModalDelete} rutaDelete={url}></ModalDelete>}
@@ -117,7 +126,7 @@ const InvTipHerramientas = ({ filterSearch, showTiposHerramientas, setShowTiposH
                 selectableRows */
                 progressPending={loading}
                 paginationRowsPerPageOptions={[7, 9, 11, 15, 20, 25, 30]}
-                onRowClicked={(data) => { console.log(data.id_herramienta) }}  // Manejar clic en la fila
+                onRowClicked={(data) => { setDataRow(data); setShowInfo(true) }}  // Manejar clic en la fila
                 highlightOnHover  // Resaltar la fila al pasar el ratón por encima
                 pointerOnHover    // Mostrar puntero al pasar el ratón por encima
                 progressComponent={

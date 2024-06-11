@@ -63,7 +63,7 @@ const Solicitantes = ({ filterSearch }) => {
             selector: row => row.control_nomina,
             sortable: true,
         },
-        {
+   /*      {
             name: "Teléfono",
             selector: row => row.telefono,
             sortable: true,
@@ -72,7 +72,7 @@ const Solicitantes = ({ filterSearch }) => {
             name: "Mail",
             selector: row => row.mail,
             sortable: true,
-        }  
+        }   */
     ]
 
 

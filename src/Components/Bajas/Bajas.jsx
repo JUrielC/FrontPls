@@ -3,6 +3,7 @@ import { ApiUrl } from '../../services/apirest'
 import { useEffect, useState } from 'react';
 import useGetWithAuth from '../../Hooks/useGetWithAUTH';
 import ModalDelete from '../ModalDelete.jsx/ModalDelete';
+import ModInfoTablaGeneric from '../ModalesInfoTabla/ModalInfoTablaGeneric';
 import '../InvTipHerramientas/InvTipHerramienta.css'
 
 
@@ -10,8 +11,10 @@ import '../InvTipHerramientas/InvTipHerramienta.css'
 const Bajas = ({ filterSearch, showBajas, setShowBajas }) => {
 
     const [dataRow, setDataRow] = useState(null)
-
     const [openModalDelete, setOpenModalDelete] = useState(false)
+    const [showInfo, setShowInfo] = useState(false)
+
+
 
     const [records, setRecords] = useState([])
     let url = ApiUrl + "bajas/"
@@ -96,6 +99,16 @@ const Bajas = ({ filterSearch, showBajas, setShowBajas }) => {
         },
     ]
 
+    const titles = {
+        id_baja: "ID baja",
+        id_herramienta: "ID herramienta",
+        nombre_motivo: "Nombre",
+        nombre_motivo: "Motivo",
+        fecha_baja: "Fecha",
+        usuario: "Usuario",
+        observaciones: "Observaciones"
+        
+    }
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -104,7 +117,7 @@ const Bajas = ({ filterSearch, showBajas, setShowBajas }) => {
 
     return (
         <>
-            {/* <ModalContainer></ModalContainer> */}
+            {showInfo && <ModInfoTablaGeneric data={dataRow} titles={titles} setOpenModalInf={setShowInfo} />}
             
             {openModalDelete && <ModalDelete style = {{overflow: 'hidden'}} id_param={dataRow.id_baja} nombre_elemento={dataRow.nombre_tipo} showTabla={showBajas} setShowTabla={setShowBajas} openThisModal={setOpenModalDelete} rutaDelete={url}></ModalDelete>}
             <DataTable
@@ -117,7 +130,7 @@ const Bajas = ({ filterSearch, showBajas, setShowBajas }) => {
                 selectableRows */
                 progressPending={loading}
                 paginationRowsPerPageOptions={[7, 9, 11, 15, 20, 25, 30]}
-                onRowClicked={(data) => { console.log(data.id_herramienta) }}  // Manejar clic en la fila
+                onRowClicked={(data) => { setDataRow(data); setShowInfo(true) }}  // Manejar clic en la fila
                 highlightOnHover  // Resaltar la fila al pasar el ratón por encima
                 pointerOnHover    // Mostrar puntero al pasar el ratón por encima
                 progressComponent={

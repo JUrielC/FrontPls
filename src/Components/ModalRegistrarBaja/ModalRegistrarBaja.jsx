@@ -75,6 +75,18 @@ const ModalRegistrarBaja = ({ id_elemento, nombre_elemento, showTabla, setShowTa
 
 
                         }
+                        {!showOptions && <>
+                        <div className="mdel-input-group">
+                            <label htmlFor=""></label>
+                            <label htmlFor=""></label>
+                            <label htmlFor=""></label>
+                            <label htmlFor=""></label>
+                            <label htmlFor=""></label>
+                            <label htmlFor=""></label>
+                            <label htmlFor=""></label>
+                            <label htmlFor=""></label>
+                        </div>
+                        </> }
                     </div>
 
 

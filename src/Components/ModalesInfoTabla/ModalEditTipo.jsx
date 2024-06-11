@@ -24,7 +24,8 @@ const ModalEditTipo = ({ data, showTable, setShowTable, openThisModal }) => {
                 <div className="form-container">
                     <h4>Editar</h4><div className="pact-input-group">
 
-                        <label htmlFor="">{message}<span></span></label>
+                        <label htmlFor="label-message">{message}<span></span></label>
+                        <label htmlFor=""><span></span></label>
                         <label htmlFor=""><span></span></label>
                         <label htmlFor="">ID: <span>{data.id_tipo}</span></label>
                         <label htmlFor="">Tipo: <span>{data.nombre_tipo}</span></label>{/**/}  

@@ -1,0 +1,51 @@
+.generic-modalContainer {
+    width: 150vh;
+    height: 66vh;
+    /* */ border-radius: 12px; 
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    padding-top: 25px;
+    padding-left: 25px;
+    position: relative;
+    z-index: 1001;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .generic-modalContainer .title {
+    display: -block;
+    text-align: start;
+    margin-top: 10px;
+  }
+  .generic-modalContainer .body {
+    flex: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.7rem;
+    text-align: center;
+  }
+  
+  .generic-modalContainer .footer {
+    flex: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .generic-modalContainer .footer button {
+    width: 150px;
+    height: 45px;
+    margin: 0px;
+    border: none;
+    padding: 0px;
+    background-color: cornflowerblue;
+    color: white;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+      

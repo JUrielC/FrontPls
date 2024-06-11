@@ -5,6 +5,7 @@ import useGetWithAuth from '../../Hooks/useGetWithAUTH';
 import actualizarDatos from '../../services/apiPut';
 import ModalEditUsuario from '../ModalesInfoTabla/ModalEditUsuario';
 import ModalResetPass from '../ModalResetPass/ModalResetPass';
+import ModInfoTablaGeneric from '../ModalesInfoTabla/ModalInfoTablaGeneric';
 import './Usuarios.css'
 
 
@@ -18,6 +19,7 @@ const Usuarios = ({ filterSearch, showUsuarios, setShowUsuarios }) => {
     const [openModalEdit, setOpenModalEdit] = useState(false)
 
     const [openModalresetPass, setOpenModalResetPass] = useState(false)
+    const [showInfo, setShowInfo] = useState(false)
 
     const { data, loading, error } = useGetWithAuth(url, setRecords)
 
@@ -48,12 +50,6 @@ const Usuarios = ({ filterSearch, showUsuarios, setShowUsuarios }) => {
             name: "ID",
             selector: row => row.id_usuario,
             sortable: true
-        },
-        {
-            name: "Rol",
-            selector: row => row.nombre_rol,
-            sortable: true,
-
         }, 
         {
             name: "Nombre(s)",
@@ -73,6 +69,12 @@ const Usuarios = ({ filterSearch, showUsuarios, setShowUsuarios }) => {
             name: "Usuario",
             selector: row => row.nombre_login,
             sortable: true,
+        },
+        {
+            name: "Rol",
+            selector: row => row.nombre_rol,
+            sortable: true,
+
         },
         {
             name: "Activo",
@@ -143,11 +145,18 @@ const Usuarios = ({ filterSearch, showUsuarios, setShowUsuarios }) => {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
-    
+    const titles = {
+        id_usuario: "ID usuario",
+        nombre_usuario: "Nombre",
+        apellido_paterno: "Apellido 1",
+        apellido_materno: "Apellido 2",
+        nombre_login: "Nombre de usuario",
+        estatus_activo: "Estatus activo"
+    }
 
     return (
         <>
-            {/* <ModalContainer></ModalContainer> */}
+            {showInfo && <ModInfoTablaGeneric data={dataRow} titles={titles} setOpenModalInf={setShowInfo} tableUsuarios={true} />}
             {openModalresetPass && <ModalResetPass data={dataRow} showTabla={showUsuarios} setShowTabla={setShowUsuarios} openThisModal={setOpenModalResetPass}/>}
             { openModalEdit && <ModalEditUsuario data ={dataRow} openThisModal={setOpenModalEdit} showUsuarios={showUsuarios} setShowUsuarios={setShowUsuarios}/>}
             <DataTable
@@ -160,7 +169,7 @@ const Usuarios = ({ filterSearch, showUsuarios, setShowUsuarios }) => {
                 selectableRows */
                 progressPending={loading}
                 paginationRowsPerPageOptions={[6, 8, 10, 15, 20, 25, 30]}
-                onRowClicked={(data) => { console.log(data.id_herramienta) }}  // Manejar clic en la fila
+                onRowClicked={(data) => { setDataRow(data); setShowInfo(true) }}  // Manejar clic en la fila
                 highlightOnHover  // Resaltar la fila al pasar el ratón por encima
                 pointerOnHover    // Mostrar puntero al pasar el ratón por encima
                 customStyles={{
