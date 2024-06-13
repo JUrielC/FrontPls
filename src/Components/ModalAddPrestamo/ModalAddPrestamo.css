@@ -148,7 +148,12 @@
     border: 1px solid #ccc;
     border-radius: 5px;
   }
-  
+  #herramientas{
+    width: 100%;
+    padding: 0px 0px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
   .button-group {
     text-align: center;
     margin-top: 20px;

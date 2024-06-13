@@ -13,6 +13,10 @@ const ModalAddHerramienta = ({ setOpenModalAddHerramienta, showInvHerramientas, 
   const [modalResp, setModalResp] = useState(false)
   const [message, setMessage] = useState('')
 
+  /* desactivar boton para evitar spam */
+
+  const [buttonDisabled, setButtonDisabled] = useState(false);  
+
   const [form, setForm] = useState({
     id_tipo: '',
     id_origen: '',
@@ -106,33 +110,34 @@ const ModalAddHerramienta = ({ setOpenModalAddHerramienta, showInvHerramientas, 
             }></textarea>
           </div>
           <div className="button-group">
-            <button type="submit" id="submit-btn" onClick={
+            <button type="submit" id="submit-btn" disabled={buttonDisabled} onClick={
               async () => {
-
-                if (form.id_tipo !== '' && form.id_origen !== '' && form.cantidad !=='0' && form.cantidad !== "" && !(form.cantidad.includes('.'))) {
+                setButtonDisabled(true)
+                if (form.id_tipo !== '' && form.id_origen !== '' && form.cantidad !== '0' && form.cantidad !== "" && !(form.cantidad.includes('.'))) {
 
                   const ruta = ApiUrl + "herramientas/"
                   const response = await enviarDatos(ruta, form)
                   setModalResp(true)
                   setMessage(response)
-
+                  setButtonDisabled(false)
                 }
                 else {
                   setModalResp(true)
                   setMessage('Ingrese valores válidos')
+                  setButtonDisabled(false)
 
                 }
 
                 /*  */
               }
             }>Enviar</button>
-            <button type="button" id="cancel-btn" onClick={() => { 
-              setOpenModalAddHerramienta(false) 
+            <button type="button" id="cancel-btn" onClick={() => {
+              setOpenModalAddHerramienta(false)
               if (showInvHerramientas) {
                 setShowHerramientas(false);
                 setTimeout(() => setShowHerramientas(true), 0);
               }
-              }}>Cancelar</button>
+            }}>Cancelar</button>
           </div>
         </div>
       </div>

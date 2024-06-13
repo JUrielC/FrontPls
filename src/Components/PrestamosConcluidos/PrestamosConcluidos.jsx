@@ -38,6 +38,17 @@ const PrestamosConcluidos = ({filterSearch}) => {
 
         },
         {
+            name: "Fecha de \npréstamo",
+            selector: row => row.fecha_prestamo,
+            sortable: true,
+            width: "9rem"
+        },
+        {
+            name: "Fecha devolución",
+            selector: row => row.fecha_devolucion,
+            sortable: true
+        },
+        {
             name: "No. Ctrl/Nómina",
             selector: row => row.control_nomina,
             sortable: true
@@ -70,16 +81,6 @@ const PrestamosConcluidos = ({filterSearch}) => {
         {
             name: "Estatus",
             selector: row => row.nombre_estatus,
-            sortable: true
-        },
-        {
-            name: "Fecha de préstamo",
-            selector: row => row.fecha_prestamo,
-            sortable: true
-        },
-        {
-            name: "Fecha devolución",
-            selector: row => row.fecha_devolucion,
             sortable: true
         },
         {

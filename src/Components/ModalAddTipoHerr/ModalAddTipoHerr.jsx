@@ -14,6 +14,10 @@ const ModalAddTipoHerr = ({ setOpenModalAddTipoHerr, showTiposHerramientas, setS
   const [message, setMessage] = useState('')
 
 
+  /* desactivar boton para evitar spam */
+
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
 
 
   return (
@@ -25,7 +29,7 @@ const ModalAddTipoHerr = ({ setOpenModalAddTipoHerr, showTiposHerramientas, setS
           </div>
           <div className="row">
             <div className="input-group">
-            {modalResp && <ModalResponse setModalResp={setModalResp} message={message} setOpenModalActual={setOpenModalAddTipoHerr}></ModalResponse>}
+              {modalResp && <ModalResponse setModalResp={setModalResp} message={message} setOpenModalActual={setOpenModalAddTipoHerr}></ModalResponse>}
               <label htmlFor="nombreTipo">Nombre de tipo de herramienta:</label>
               <input type="text" id="nombreTipo" autoComplete="off" maxLength={50} className="selectric" onChange={
                 (e) => {
@@ -49,29 +53,31 @@ const ModalAddTipoHerr = ({ setOpenModalAddTipoHerr, showTiposHerramientas, setS
             }></textarea>
           </div>
           <div className="button-group">
-            <button type="submit" id="submit-btn" onClick={
+            <button type="submit" id="submit-btn" disabled={buttonDisabled} onClick={
               async () => {
-                console.log(form)
+                setButtonDisabled(true)
                 if ((form.nombre_tipo).trim() !== '') {
 
                   const ruta = ApiUrl + "tipo_herramienta/"
                   const response = await enviarDatos(ruta, form)
                   setModalResp(true)
                   setMessage(response)
+                  setButtonDisabled(false)
                 }
                 else {
                   setModalResp(true)
                   setMessage('Ingrese valores válidos')
+                  setButtonDisabled(false)
                 }
               }
             }>Enviar</button>
-            <button type="button" id="cancel-btn" onClick={() => { 
+            <button type="button" id="cancel-btn" onClick={() => {
               setOpenModalAddTipoHerr(false)
               if (showTiposHerramientas) {
                 setShowTiposHerramientas(false);
                 setTimeout(() => setShowTiposHerramientas(true), 0);
               }
-               }}>Cancelar</button>
+            }}>Cancelar</button>
           </div>
         </div>
       </div>

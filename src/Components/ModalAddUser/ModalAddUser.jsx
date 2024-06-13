@@ -10,6 +10,11 @@ const ModalAddUser = ({ setOpenModalAddUser, showUsuarios, setShowUsuarios }) =>
   const [modalResp, setModalResp] = useState(false)
   const [message, setMessage] = useState('')
 
+  /* desactivar boton para evitar spam */
+
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
+
   const [form, setForm] = useState({
     id_rol: '2',
     nombre_usuario: '',
@@ -131,18 +136,21 @@ const ModalAddUser = ({ setOpenModalAddUser, showUsuarios, setShowUsuarios }) =>
           </div>
 
           <div className="au-button-group">
-            <button type="submit" id="submit-btn" onClick={
+            <button type="submit" id="submit-btn" disabled={buttonDisabled} onClick={
               async () => {
+                setButtonDisabled(true)
                 if (form.nombre_usuario.trim() !== '' && form.apellido_paterno.trim() !== '' && form.nombre_login.trim() !== '' && (form.password).trim() !== '' && form.id_rol.trim() !== '' && form.estatus_activo.trim() !== '') {
-
+                  
                   const ruta = ApiUrl + "usuarios/"
                   const response = await enviarDatos(ruta, form)
                   setMessage(response)
                   setModalResp(true)
+                  setButtonDisabled(false)
                 }
                 else {
                   setMessage('Ingrese valores válidos')
                   setModalResp(true)
+                  setButtonDisabled(false)
                 }
               }
             }>Enviar</button>

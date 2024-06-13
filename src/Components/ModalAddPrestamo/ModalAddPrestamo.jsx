@@ -3,6 +3,7 @@ import { useState } from "react";
 import useGetWithAuth from '../../Hooks/useGetWithAUTH'
 import { ApiUrl } from "../../services/apirest";
 import enviarDatos from "../../services/apiPost";
+import Select from 'react-select';
 import ModalResponse from "../ModalResponse/ModalResponse";
 import './ModalAddPrestamo.css'
 
@@ -12,10 +13,24 @@ const ModalAddPrestamo = ({ setOpenModalPrestamos, showPrestActivos, setShowPres
   let url_sol = ApiUrl + "solicitantes/"
   let url_carr = ApiUrl + "carreras/"
 
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const handleChange = selected => {
+    setSelectedOptions(selected);
+    console.log('Selected options:', selected);
+  };
+
+  const options = [
+    { value: 'apple', label: 'Apple' },
+    { value: 'banana', label: 'Banana' },
+    { value: 'cherry', label: 'Cherry' },
+    { value: 'date', label: 'Date' },
+    { value: 'grape', label: 'Grape' }
+  ];
 
   const { data, loading, error } = useGetWithAuth(url, null)
   const { data: dataSol, loading: loading_sol, error: error_sol } = useGetWithAuth(url_sol, null)
-  const { data: dataCarreras, loading: loadingCarreras, error: errorCarreras } = useGetWithAuth(url_carr, null)
+  //const { data: dataCarreras, loading: loadingCarreras, error: errorCarreras } = useGetWithAuth(url_carr, null)
   /* VALORES DE LOS COMBOBOX TIPO Y HERRAMIENTAS DISPONIBLES */
   const [selectedTipo, setSelectedTipo] = useState('');
   const [herramientas, setHerramientas] = useState([]);
@@ -24,12 +39,18 @@ const ModalAddPrestamo = ({ setOpenModalPrestamos, showPrestActivos, setShowPres
   /* Busqueada por numero de control */
   const [controlNomina, setControlNomina] = useState();
   const [nombreEncontrado, setNombreEncontrado] = useState('');
+  const [nombreUser, setNombreUser] = useState('')
   /* carreras */
   const [selectedCarrera, setSelectedCarrera] = useState('')
 
   /*Modal para response del backend*/
   const [modalResp, setModalResp] = useState(false)
   const [message, setMessage] = useState('')
+
+  /* desactivar boton para evitar spam */
+
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
 
   /* Formulario */
 
@@ -58,14 +79,14 @@ const ModalAddPrestamo = ({ setOpenModalPrestamos, showPrestActivos, setShowPres
 
   }, [data])
 
-  useEffect(() => {
-    if (loadingCarreras || errorCarreras || !dataCarreras) {
-      return;
-    }
-
-    setSelectedCarrera(dataCarreras[0].id_carrera)
-
-  }, [dataCarreras])
+  /*   useEffect(() => {
+      if (loadingCarreras || errorCarreras || !dataCarreras) {
+        return;
+      }
+  
+      setSelectedCarrera(dataCarreras[0].id_carrera)
+  
+    }, [dataCarreras]) */
 
   useEffect(() => {
     if (loading_sol || error_sol || !dataSol) {
@@ -99,6 +120,7 @@ const ModalAddPrestamo = ({ setOpenModalPrestamos, showPrestActivos, setShowPres
     setControlNomina(valorInput);
 
     if (valorInput.trim() === "") {
+      setNombreUser('')
       setNombreEncontrado('')
       setForm((prevForm) => ({
         ...prevForm,
@@ -110,11 +132,13 @@ const ModalAddPrestamo = ({ setOpenModalPrestamos, showPrestActivos, setShowPres
       const encontrado = dataSol.find(item => item.control_nomina === valorInput);
       if (encontrado) {
         setNombreEncontrado("Usuario encontrado: " + encontrado.nombre + " " + encontrado.apellido_paterno + " " + encontrado.apellido_materno);
+        setNombreUser(encontrado.nombre + " " + encontrado.apellido_paterno + " " + encontrado.apellido_materno)
         setForm((prevForm) => ({
           ...prevForm,
           id_solicitante: encontrado.id_solicitante
         }));
       } else {
+        setNombreUser('')
         setNombreEncontrado('Usuario no encontrado');
         setForm((prevForm) => ({
           ...prevForm,
@@ -132,14 +156,13 @@ const ModalAddPrestamo = ({ setOpenModalPrestamos, showPrestActivos, setShowPres
   if (error) return <p>Error: {error}</p>;
   if (loading_sol) return <p>Loading...</p>;
   if (error_sol) return <p>Error: {error}</p>;
-  if (loadingCarreras) return <p>Loading...</p>;
-  if (errorCarreras) return <p>Error: {error}</p>;
 
   return (
     <div className="modalBackground">
       <div className="modalContainer">
         <div className="form-container">
           <h2>Registrar Préstamo</h2>
+          <h6 style={{ textAlign: "center" }}>(Si elige más de un insumo, se registrará cada préstamo por separado)</h6>
           <div className="row">
             <div className="input-group">
 
@@ -174,18 +197,20 @@ const ModalAddPrestamo = ({ setOpenModalPrestamos, showPrestActivos, setShowPres
               <input type="text" id="solicita" className="selectric" autoComplete="off" placeholder='No. de control o nómina' onChange={handleChangeCtrlNomina} />
             </div>
             <div className="input-group">
-              <label htmlFor="carrera">Carrera:</label>
-              <select id="carrera" className="selectric" onChange={
-                (e) => {
-                  setSelectedCarrera(e.target.value)
-                }
-              }>
+              <label htmlFor="carrera">Usuario:</label>
+              <input type="text" id="carrera" className="selectric" value={nombreUser} autoComplete="off" />
 
-                {dataCarreras.map(item => (
-                  <option key={item.id_carrera} value={item.id_carrera}>{item.nombre_carrera}</option>
-                ))}
+            {/*   <label htmlFor="herramientas">Select your favorite fruits:</label>
+              <Select
+                className="selectric"
+                id="herramientas"
+                isMulti
+                value={selectedOptions}
+                onChange={handleChange}
+                options={options}
+              />
+ */}
 
-              </select>
             </div>
           </div>
 
@@ -209,9 +234,9 @@ const ModalAddPrestamo = ({ setOpenModalPrestamos, showPrestActivos, setShowPres
             }}></textarea>
           </div>
           <div className="button-group">
-            <button type="submit" id="submit-btn" onClick={
+            <button type="submit" id="submit-btn" disabled={buttonDisabled} onClick={
               async () => {
-
+                setButtonDisabled(true)
                 if (form.id_carrera !== null && form.id_carrera !== undefined && form.id_herramienta !== "" && form.id_solicitante !== "") {
 
                   console.log(form)
@@ -219,12 +244,14 @@ const ModalAddPrestamo = ({ setOpenModalPrestamos, showPrestActivos, setShowPres
                   const response = await enviarDatos(ruta, form)
                   setModalResp(true)
                   setMessage(response)
+                  setButtonDisabled(false)
 
                 }
                 else {
                   console.log("verifique los datos")
                   setModalResp(true)
                   setMessage('Ingrese valores válidos')
+                  setButtonDisabled(false)
 
                 }
 
@@ -232,13 +259,13 @@ const ModalAddPrestamo = ({ setOpenModalPrestamos, showPrestActivos, setShowPres
               }
             }>Enviar</button>
 
-            <button type="button" id="cancel-btn" onClick={() => { 
-              setOpenModalPrestamos(false) 
+            <button type="button" id="cancel-btn" onClick={() => {
+              setOpenModalPrestamos(false)
               if (showPrestActivos) {
                 setShowPrestActivos(false);
                 setTimeout(() => setShowPrestActivos(true), 0);
               }
-               }}>Cancelar</button>
+            }}>Cancelar</button>
           </div>
         </div>
       </div>
