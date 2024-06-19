@@ -162,7 +162,7 @@ const ModalAddPrestamo = ({ setOpenModalPrestamos, showPrestActivos, setShowPres
       <div className="modalContainer">
         <div className="form-container">
           <h2>Registrar Préstamo</h2>
-          <h6 style={{ textAlign: "center" }}>(Si elige más de un insumo, se registrará cada préstamo por separado)</h6>
+          {/* <h6 style={{ textAlign: "center" }}>(Si elige más de un insumo, se registrará cada préstamo por separado)</h6> */}
           <div className="row">
             <div className="input-group">
 

@@ -3,7 +3,7 @@ import eliminarDatos from "../../services/apiDelete";
 import { ApiUrl } from "../../services/apirest";
 import './ModalDelete.css'
 
-const ModalDelete = ({ id_param, nombre_elemento, showTabla, setShowTabla, openThisModal, rutaDelete }) => {
+const ModalDelete = ({ id_param, nombre_elemento, showTabla, setShowTabla, openThisModal, rutaDelete, delUser = false }) => {
 
     const [labelInfo, setLabelInfo ] = useState('')
     const [labelTitle, setLabelTitle] = useState('Confirmación')
@@ -17,6 +17,7 @@ const ModalDelete = ({ id_param, nombre_elemento, showTabla, setShowTabla, openT
                             <label htmlFor=""></label>
                         </div>
                     <h4 id="mdel-titulo" style={colorTitle}>{labelTitle}</h4>
+                    { delUser && <h6>Si elimina el usuario, todos los registros relacionados a este aparecerán como "usuario eliminado"</h6>}
                   
                         <div className="mdel-input-group">
                             <label htmlFor=""></label>

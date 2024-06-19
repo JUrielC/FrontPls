@@ -43,6 +43,9 @@ const InicioForm = () => {
     //mostrar modal de borrar historial de bajas
     const [showModalDelBajas, setShowModalDelBajas] = useState(false)
 
+    //mostrar modal de borrar historial de prstamos concluidos
+    const [showModalDelPConc, setShowModalDelPConc] = useState(false)
+
     //Usuarios
     const [showUsuarios, setShowUsuarios] = useState(false)
     const [showSolicitantes, setShowSolicitantes] = useState(false)
@@ -90,6 +93,12 @@ const InicioForm = () => {
              <ModalDelete id_param={""} nombre_elemento={"Historial de bajas"} 
              showTabla={showBajas} setShowTabla={setShowBajas} openThisModal={setShowModalDelBajas}
              rutaDelete={ApiUrl + "bajas/clear_bajas/all"}
+             ></ModalDelete>
+             } 
+             {showPrestConcluidos && showModalDelPConc && 
+             <ModalDelete id_param={""} nombre_elemento={"Historial de Prestamos concluidos"} 
+             showTabla={showPrestConcluidos} setShowTabla={setShowPrestConcluidos} openThisModal={setShowModalDelPConc}
+             rutaDelete={ApiUrl + "prestamos/concluidos/delete_all"}
              ></ModalDelete>
              }
             <div>
@@ -182,13 +191,17 @@ const InicioForm = () => {
                                              }> Borrar historial</button>
                                                 </div>
                                              }
+                                              {showPrestConcluidos &&  
+                                            <div className='inicio-button-group'>
+                                             <button className='inicio-button-group'onClick={
+                                                ()=>{
+                                                    setShowModalDelPConc(true)
+                                                }
+                                             }> Borrar historial</button>
+                                                </div>
+                                             }
 
                                         </div>
-
-                                        {/*  <p>
-                                            
-                                        {selectedOption && <p>Selected option: {selectedOption}</p>}
-                                        </p> */}
                                     </div>
 
                                     {openModalPrestamos && <ModalAddPrestamo setOpenModalPrestamos={setOpenModalPrestamos} setShowPrestActivos={setShowPrestActivos} showPrestActivos={showPrestActivos}/>}
